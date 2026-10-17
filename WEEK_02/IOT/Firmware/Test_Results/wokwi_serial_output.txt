@@ -1,0 +1,61 @@
+Raw Serial Monitor output from the Wokwi run (ESP32-S3, SIMULATED inputs):
+
+=== CRASH CONNECT: SIMULATED TESTS (no hardware) ===
+Device ID: CC-IOT-01
+Simulation mode: YES
+[GNSS] SIMULATED module initialized (recorded NMEA, NOT live GPS)
+[IMU] SIMULATED module initialized
+[COMMS] SIMULATION STUB initialized
+[COMMS] Physical A7670C modem: NOT CONNECTED
+[COMMS] Network connection: NOT ATTEMPTED
+[COMMS] Cellular connectivity is pending hardware integration.
+[IMU] SIMULATED TEST DATA
+
+--- TEST 1: normal start-up (GPS from recorded NMEA, network = simulated) ---
+[STATE] Initial state: BOOT
+[STATE] BOOT -> SELF_TEST
+[STATE] SELF_TEST -> ACQUIRING_GPS
+[STATE] ACQUIRING_GPS -> NETWORK_CONNECTING
+[STATE] NETWORK_CONNECTING -> OPERATIONAL
+{"device_id":"CC-IOT-01","timestamp_utc":"1994-03-23T12:35:19Z","location":{"valid":true,"latitude":48.117300,"longitude":11.516667},"imu":{"available":true,"accel_x_g":0.020,"accel_y_g":0.010,"accel_z_g":0.980,"gyro_x_dps":0.500,"gyro_y_dps":0.200,"gyro_z_dps":1.000},"event_active":false,"device_state":"OPERATIONAL","simulated":true}
+Packet build: SUCCESS (NOT sent, no modem)
+
+--- TEST 2: no GPS fix -> location and timestamp must be null ---
+[GNSS] SIMULATED module initialized (recorded NMEA, NOT live GPS)
+{"device_id":"CC-IOT-01","timestamp_utc":null,"location":{"valid":false,"latitude":null,"longitude":null},"imu":{"available":true,"accel_x_g":0.020,"accel_y_g":0.010,"accel_z_g":0.980,"gyro_x_dps":0.500,"gyro_y_dps":0.200,"gyro_z_dps":1.000},"event_active":false,"device_state":"OPERATIONAL","simulated":true}
+Packet build: SUCCESS (NOT sent, no modem)
+
+--- TEST 3: IMU unavailable -> IMU values must be null ---
+{"device_id":"CC-IOT-01","timestamp_utc":"1994-03-23T12:35:19Z","location":{"valid":true,"latitude":48.117300,"longitude":11.516667},"imu":{"available":false,"accel_x_g":null,"accel_y_g":null,"accel_z_g":null,"gyro_x_dps":null,"gyro_y_dps":null,"gyro_z_dps":null},"event_active":false,"device_state":"OPERATIONAL","simulated":true}
+Packet build: SUCCESS (NOT sent, no modem)
+
+--- TEST 4: movement burst -> EVENT_ACTIVE (SIMULATED test values) ---
+[STATE] Initial state: BOOT
+[STATE] BOOT -> SELF_TEST
+[STATE] SELF_TEST -> ACQUIRING_GPS
+[STATE] ACQUIRING_GPS -> NETWORK_CONNECTING
+[STATE] NETWORK_CONNECTING -> OPERATIONAL
+Acceleration magnitude (g): 2.474
+Placeholder threshold (g): 2.00
+[STATE] OPERATIONAL -> EVENT_ACTIVE
+{"device_id":"CC-IOT-01","timestamp_utc":"1994-03-23T12:35:19Z","location":{"valid":true,"latitude":48.117300,"longitude":11.516667},"imu":{"available":true,"accel_x_g":1.800,"accel_y_g":1.200,"accel_z_g":1.200,"gyro_x_dps":90.000,"gyro_y_dps":60.000,"gyro_z_dps":40.000},"event_active":true,"device_state":"EVENT_ACTIVE","simulated":true}
+Packet build: SUCCESS (NOT sent, no modem)
+[STATE] EVENT_ACTIVE -> OPERATIONAL
+
+--- TEST 5: GPS fix lost -> DEGRADED, then recovery ---
+[STATE] Initial state: BOOT
+[STATE] BOOT -> SELF_TEST
+[STATE] SELF_TEST -> ACQUIRING_GPS
+[STATE] ACQUIRING_GPS -> NETWORK_CONNECTING
+[STATE] NETWORK_CONNECTING -> OPERATIONAL
+[STATE] OPERATIONAL -> DEGRADED
+[STATE] DEGRADED -> OPERATIONAL
+
+--- TEST 6: self-test fails -> FAULT; illegal transition rejected ---
+[STATE] Initial state: BOOT
+[STATE] BOOT -> SELF_TEST
+[STATE] SELF_TEST -> FAULT
+[STATE] REJECTED (not allowed): FAULT -> OPERATIONAL
+
+NOTE: GPS = recorded NMEA sample (not live), IMU = test values,
+network = simulated condition. No cellular transmission occurred.
