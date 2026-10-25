@@ -1,0 +1,2 @@
+Paste the Wokwi Serial Monitor output of the Week 3 run here (all suites, SIMULATED inputs).
+Delete this line before committing.

@@ -1,0 +1,635 @@
+EXPECTED OUTPUT from a PC build of the same code (shim for the Arduino library, simulated time).
+This is a REFERENCE for comparison. The evidence for the review is YOUR Wokwi Serial Monitor output.
+All inputs are recorded, simulated or mocked. Not hardware validation.
+------------------------------------------------------------------------------------
+
+##### CRASH CONNECT IoT - WEEK 3 TEST RUN (simulated, no hardware) #####
+Device ID: CC-IOT-01
+Simulation mode: YES
+
+=== GNSS WEEK 3 TESTS (recorded NMEA, parser tests only) ===
+Placeholder limits: min satellites = 4, max HDOP = 5.0, stale after (ms) = 3000
+
+Test 1: valid recorded pair
+[GNSS] SIMULATED module initialized (recorded NMEA for parser tests, NOT live GPS)
+  PASS: fix is valid
+  PASS: fix quality comes from GGA (1)
+  PASS: satellites 8 and HDOP 0.9 parsed
+  PASS: speed 22.4 knots parsed
+  PASS: UTC epoch seconds computed (764426119)
+  PASS: course 84.4 degrees parsed
+  PASS: status text is VALID
+  PASS: time flagged NOT live (recorded data)
+  lat=48.117300 lon=11.516667 age(ms)=0
+
+Test 2: recorded no-fix pair
+[GNSS] SIMULATED module initialized (recorded NMEA for parser tests, NOT live GPS)
+  PASS: fix not valid
+  PASS: fix quality 0
+  PASS: speed and UTC not valid
+  PASS: age = never had a fix
+  PASS: status text is NO_FIX
+  PASS: course not valid
+  PASS: no last-valid fix exists
+
+Test 3: too few satellites (3 < placeholder minimum)
+[GNSS] SIMULATED module initialized (recorded NMEA for parser tests, NOT live GPS)
+  PASS: rejected, quality 0
+
+Test 4: HDOP too high (9.9 > placeholder maximum)
+[GNSS] SIMULATED module initialized (recorded NMEA for parser tests, NOT live GPS)
+  PASS: rejected, quality 0
+
+Test 5: corrupted line (bad checksum)
+[GNSS] SIMULATED module initialized (recorded NMEA for parser tests, NOT live GPS)
+[GNSS] line rejected: bad checksum
+  PASS: no fix: corrupted RMC was rejected
+
+Test 6: fix becomes old -> must not be shown as current
+[GNSS] SIMULATED module initialized (recorded NMEA for parser tests, NOT live GPS)
+  PASS: valid right after the lines
+  PASS: after the stale limit: not valid, quality 0
+  PASS: age of last valid fix is reported
+  PASS: status text is NO_FIX when stale
+  PASS: last-valid fix kept as HISTORY with its age
+  PASS: history is available, but fix.valid stays false (not current)
+
+Test 7: valid fix lost -> no-fix sentences arrive
+[GNSS] SIMULATED module initialized (recorded NMEA for parser tests, NOT live GPS)
+  PASS: reported as no fix immediately
+
+Test 8: GPS loss and recovery
+[GNSS] SIMULATED module initialized (recorded NMEA for parser tests, NOT live GPS)
+  PASS: step 1: valid fix
+  PASS: step 2: fix lost -> NO_FIX, quality 0
+  PASS: step 2: old fix kept only as history
+  PASS: step 3: fix recovered
+  PASS: step 3: age reset after the new valid fix
+
+Test 9: malformed / invalid input must not crash or create a fix
+[GNSS] SIMULATED module initialized (recorded NMEA for parser tests, NOT live GPS)
+[GNSS] line rejected: bad checksum
+[GNSS] line rejected: bad checksum
+[GNSS] line rejected: bad checksum
+  PASS: garbage, truncated and too-short lines ignored; NO_FIX
+
+RESULT: 31 passed, 0 failed
+NOTE: recorded data, parser tests only. No live GPS, no hardware.
+
+=== MODEM WEEK 3 TESTS (MOCK responses, no hardware) ===
+
+Test 1: everything works (mock)
+[MODEM] MOCK modem initialised. Responses are SIMULATED, not from a real A7670C.
+[MODEM][MOCK] state: NOT_STARTED -> POWER_UP
+[MODEM][MOCK] state: POWER_UP -> AT_CHECK
+[MODEM][MOCK] > AT
+[MODEM][MOCK] < OK
+[MODEM][MOCK] state: AT_CHECK -> SIM_CHECK
+[MODEM][MOCK] > AT+CPIN?
+[MODEM][MOCK] < +CPIN: READY
+[MODEM][MOCK] state: SIM_CHECK -> REGISTERING
+[MODEM][MOCK] > AT+CEREG?
+[MODEM][MOCK] < +CEREG: 0,2
+[MODEM][MOCK] > AT+CEREG?
+[MODEM][MOCK] < +CEREG: 0,2
+[MODEM][MOCK] > AT+CEREG?
+[MODEM][MOCK] < +CEREG: 0,1
+[MODEM][MOCK] state: REGISTERING -> SIGNAL_CHECK
+[MODEM][MOCK] > AT+CSQ
+[MODEM][MOCK] < +CSQ: 18,99
+[MODEM][MOCK] state: SIGNAL_CHECK -> APN_CONFIG
+[MODEM][MOCK] > AT+CGDCONT=1,"IP","mock.apn.test"
+[MODEM][MOCK] < OK
+[MODEM][MOCK] state: APN_CONFIG -> DATA_SESSION
+[MODEM][MOCK] > AT+NETOPEN
+[MODEM][MOCK] < +NETOPEN: 0
+[MODEM][MOCK] state: DATA_SESSION -> READY_SIMULATED
+[MODEM] READY_SIMULATED: mock only. NOT a real registration or data session.
+  PASS: reaches READY_SIMULATED
+  PASS: SIM ready, registered, data session flags (all mock)
+  PASS: signal quality read (mock CSQ 18)
+  PASS: status is flagged simulated
+
+Test 2: modem never answers AT
+[MODEM] MOCK modem initialised. Responses are SIMULATED, not from a real A7670C.
+[MODEM][MOCK] state: NOT_STARTED -> POWER_UP
+[MODEM][MOCK] state: POWER_UP -> AT_CHECK
+[MODEM][MOCK] > AT
+[MODEM][MOCK] < (no response: timeout)
+[MODEM][MOCK] > AT
+[MODEM][MOCK] < (no response: timeout)
+[MODEM][MOCK] > AT
+[MODEM][MOCK] < (no response: timeout)
+[MODEM][MOCK] state: AT_CHECK -> FAILED_NO_RESPONSE
+  PASS: FAILED_NO_RESPONSE after the retry limit
+  PASS: exactly maxRetries attempts were made
+
+Test 3: SIM not inserted
+[MODEM] MOCK modem initialised. Responses are SIMULATED, not from a real A7670C.
+[MODEM][MOCK] state: NOT_STARTED -> POWER_UP
+[MODEM][MOCK] state: POWER_UP -> AT_CHECK
+[MODEM][MOCK] > AT
+[MODEM][MOCK] < OK
+[MODEM][MOCK] state: AT_CHECK -> SIM_CHECK
+[MODEM][MOCK] > AT+CPIN?
+[MODEM][MOCK] < +CPIN: NOT INSERTED
+[MODEM][MOCK] > AT+CPIN?
+[MODEM][MOCK] < +CPIN: NOT INSERTED
+[MODEM][MOCK] > AT+CPIN?
+[MODEM][MOCK] < +CPIN: NOT INSERTED
+[MODEM][MOCK] state: SIM_CHECK -> FAILED_NO_SIM
+  PASS: FAILED_NO_SIM
+
+Test 4: registration denied
+[MODEM] MOCK modem initialised. Responses are SIMULATED, not from a real A7670C.
+[MODEM][MOCK] state: NOT_STARTED -> POWER_UP
+[MODEM][MOCK] state: POWER_UP -> AT_CHECK
+[MODEM][MOCK] > AT
+[MODEM][MOCK] < OK
+[MODEM][MOCK] state: AT_CHECK -> SIM_CHECK
+[MODEM][MOCK] > AT+CPIN?
+[MODEM][MOCK] < +CPIN: READY
+[MODEM][MOCK] state: SIM_CHECK -> REGISTERING
+[MODEM][MOCK] > AT+CEREG?
+[MODEM][MOCK] < +CEREG: 0,3
+[MODEM][MOCK] state: REGISTERING -> FAILED_REG_DENIED
+  PASS: FAILED_REG_DENIED
+
+Test 5: network never registers (timeout)
+[MODEM] MOCK modem initialised. Responses are SIMULATED, not from a real A7670C.
+[MODEM][MOCK] state: NOT_STARTED -> POWER_UP
+[MODEM][MOCK] state: POWER_UP -> AT_CHECK
+[MODEM][MOCK] > AT
+[MODEM][MOCK] < OK
+[MODEM][MOCK] state: AT_CHECK -> SIM_CHECK
+[MODEM][MOCK] > AT+CPIN?
+[MODEM][MOCK] < +CPIN: READY
+[MODEM][MOCK] state: SIM_CHECK -> REGISTERING
+[MODEM][MOCK] > AT+CEREG?
+[MODEM][MOCK] < +CEREG: 0,2
+[MODEM][MOCK] > AT+CEREG?
+[MODEM][MOCK] < +CEREG: 0,2
+[MODEM][MOCK] > AT+CEREG?
+[MODEM][MOCK] < +CEREG: 0,2
+[MODEM][MOCK] > AT+CEREG?
+[MODEM][MOCK] < +CEREG: 0,2
+[MODEM][MOCK] > AT+CEREG?
+[MODEM][MOCK] < +CEREG: 0,2
+[MODEM][MOCK] > AT+CEREG?
+[MODEM][MOCK] < +CEREG: 0,2
+[MODEM][MOCK] > AT+CEREG?
+[MODEM][MOCK] < +CEREG: 0,2
+[MODEM][MOCK] > AT+CEREG?
+[MODEM][MOCK] < +CEREG: 0,2
+[MODEM][MOCK] state: REGISTERING -> FAILED_REG_TIMEOUT
+  PASS: FAILED_REG_TIMEOUT after the registration timeout
+
+Test 6: weak signal (policy is a placeholder)
+[MODEM] MOCK modem initialised. Responses are SIMULATED, not from a real A7670C.
+[MODEM][MOCK] state: NOT_STARTED -> POWER_UP
+[MODEM][MOCK] state: POWER_UP -> AT_CHECK
+[MODEM][MOCK] > AT
+[MODEM][MOCK] < OK
+[MODEM][MOCK] state: AT_CHECK -> SIM_CHECK
+[MODEM][MOCK] > AT+CPIN?
+[MODEM][MOCK] < +CPIN: READY
+[MODEM][MOCK] state: SIM_CHECK -> REGISTERING
+[MODEM][MOCK] > AT+CEREG?
+[MODEM][MOCK] < +CEREG: 0,2
+[MODEM][MOCK] > AT+CEREG?
+[MODEM][MOCK] < +CEREG: 0,2
+[MODEM][MOCK] > AT+CEREG?
+[MODEM][MOCK] < +CEREG: 0,1
+[MODEM][MOCK] state: REGISTERING -> SIGNAL_CHECK
+[MODEM][MOCK] > AT+CSQ
+[MODEM][MOCK] < +CSQ: 3,99
+[MODEM][MOCK] state: SIGNAL_CHECK -> APN_CONFIG
+[MODEM][MOCK] > AT+CGDCONT=1,"IP","mock.apn.test"
+[MODEM][MOCK] < OK
+[MODEM][MOCK] state: APN_CONFIG -> DATA_SESSION
+[MODEM][MOCK] > AT+NETOPEN
+[MODEM][MOCK] < +NETOPEN: 0
+[MODEM][MOCK] state: DATA_SESSION -> READY_SIMULATED
+[MODEM] READY_SIMULATED: mock only. NOT a real registration or data session.
+  PASS: weak signal flagged (CSQ 3)
+  PASS: bring-up continues (policy PENDING CONFIRMATION)
+
+Test 7: data session cannot be opened
+[MODEM] MOCK modem initialised. Responses are SIMULATED, not from a real A7670C.
+[MODEM][MOCK] state: NOT_STARTED -> POWER_UP
+[MODEM][MOCK] state: POWER_UP -> AT_CHECK
+[MODEM][MOCK] > AT
+[MODEM][MOCK] < OK
+[MODEM][MOCK] state: AT_CHECK -> SIM_CHECK
+[MODEM][MOCK] > AT+CPIN?
+[MODEM][MOCK] < +CPIN: READY
+[MODEM][MOCK] state: SIM_CHECK -> REGISTERING
+[MODEM][MOCK] > AT+CEREG?
+[MODEM][MOCK] < +CEREG: 0,2
+[MODEM][MOCK] > AT+CEREG?
+[MODEM][MOCK] < +CEREG: 0,2
+[MODEM][MOCK] > AT+CEREG?
+[MODEM][MOCK] < +CEREG: 0,1
+[MODEM][MOCK] state: REGISTERING -> SIGNAL_CHECK
+[MODEM][MOCK] > AT+CSQ
+[MODEM][MOCK] < +CSQ: 18,99
+[MODEM][MOCK] state: SIGNAL_CHECK -> APN_CONFIG
+[MODEM][MOCK] > AT+CGDCONT=1,"IP","mock.apn.test"
+[MODEM][MOCK] < OK
+[MODEM][MOCK] state: APN_CONFIG -> DATA_SESSION
+[MODEM][MOCK] > AT+NETOPEN
+[MODEM][MOCK] < +NETOPEN: 1
+[MODEM][MOCK] > AT+NETOPEN
+[MODEM][MOCK] < +NETOPEN: 1
+[MODEM][MOCK] > AT+NETOPEN
+[MODEM][MOCK] < +NETOPEN: 1
+[MODEM][MOCK] state: DATA_SESSION -> FAILED_DATA_SESSION
+  PASS: FAILED_DATA_SESSION
+  PASS: no data session flag
+
+Test 8: APN still PENDING (as in config)
+[MODEM] MOCK modem initialised. Responses are SIMULATED, not from a real A7670C.
+[MODEM][MOCK] state: NOT_STARTED -> POWER_UP
+[MODEM][MOCK] state: POWER_UP -> AT_CHECK
+[MODEM][MOCK] > AT
+[MODEM][MOCK] < OK
+[MODEM][MOCK] state: AT_CHECK -> SIM_CHECK
+[MODEM][MOCK] > AT+CPIN?
+[MODEM][MOCK] < +CPIN: READY
+[MODEM][MOCK] state: SIM_CHECK -> REGISTERING
+[MODEM][MOCK] > AT+CEREG?
+[MODEM][MOCK] < +CEREG: 0,2
+[MODEM][MOCK] > AT+CEREG?
+[MODEM][MOCK] < +CEREG: 0,2
+[MODEM][MOCK] > AT+CEREG?
+[MODEM][MOCK] < +CEREG: 0,1
+[MODEM][MOCK] state: REGISTERING -> SIGNAL_CHECK
+[MODEM][MOCK] > AT+CSQ
+[MODEM][MOCK] < +CSQ: 18,99
+[MODEM][MOCK] state: SIGNAL_CHECK -> APN_CONFIG
+[MODEM] APN is still PENDING CONFIRMATION: cannot configure the data context
+[MODEM][MOCK] state: APN_CONFIG -> FAILED_APN_PENDING
+  PASS: FAILED_APN_PENDING, no invented APN used
+
+RESULT: 14 passed, 0 failed
+NOTE: MOCK modem only. No real registration, data session or transmission.
+
+=== INTEGRATION TESTS (recorded NMEA + MOCK modem) ===
+
+Test 1: normal start-up
+[GNSS] SIMULATED module initialized (recorded NMEA for parser tests, NOT live GPS)
+[MODEM] MOCK modem initialised. Responses are SIMULATED, not from a real A7670C.
+[STATE] Initial state: BOOT
+[MODEM][MOCK] state: NOT_STARTED -> POWER_UP
+[STATE] BOOT -> SELF_TEST
+[STATE] SELF_TEST -> ACQUIRING_GPS
+[MODEM][MOCK] state: POWER_UP -> AT_CHECK
+[MODEM][MOCK] > AT
+[MODEM][MOCK] < OK
+[MODEM][MOCK] state: AT_CHECK -> SIM_CHECK
+[MODEM][MOCK] > AT+CPIN?
+[MODEM][MOCK] < +CPIN: READY
+[MODEM][MOCK] state: SIM_CHECK -> REGISTERING
+[MODEM][MOCK] > AT+CEREG?
+[MODEM][MOCK] < +CEREG: 0,2
+[STATE] ACQUIRING_GPS -> NETWORK_CONNECTING
+[MODEM][MOCK] > AT+CEREG?
+[MODEM][MOCK] < +CEREG: 0,2
+[MODEM][MOCK] > AT+CEREG?
+[MODEM][MOCK] < +CEREG: 0,1
+[MODEM][MOCK] state: REGISTERING -> SIGNAL_CHECK
+[MODEM][MOCK] > AT+CSQ
+[MODEM][MOCK] < +CSQ: 18,99
+[MODEM][MOCK] state: SIGNAL_CHECK -> APN_CONFIG
+[MODEM][MOCK] > AT+CGDCONT=1,"IP","mock.apn.test"
+[MODEM][MOCK] < OK
+[MODEM][MOCK] state: APN_CONFIG -> DATA_SESSION
+[MODEM][MOCK] > AT+NETOPEN
+[MODEM][MOCK] < +NETOPEN: 0
+[MODEM][MOCK] state: DATA_SESSION -> READY_SIMULATED
+[MODEM] READY_SIMULATED: mock only. NOT a real registration or data session.
+[STATE] NETWORK_CONNECTING -> OPERATIONAL
+  status: GPS=VALID net=MOCK_READY(READY_SIMULATED) state=OPERATIONAL
+  PASS: reaches OPERATIONAL (mock network)
+
+Test 2: GPS loss then recovery (while OPERATIONAL)
+[STATE] OPERATIONAL -> DEGRADED
+  status: GPS=NO_FIX net=MOCK_READY(READY_SIMULATED) state=DEGRADED
+  PASS: GPS lost -> DEGRADED
+[STATE] DEGRADED -> OPERATIONAL
+  status: GPS=VALID net=MOCK_READY(READY_SIMULATED) state=OPERATIONAL
+  PASS: GPS recovered -> OPERATIONAL
+
+Test 3: GPS data stops (last fix goes stale)
+[STATE] OPERATIONAL -> DEGRADED
+  status: GPS=NO_FIX net=MOCK_READY(READY_SIMULATED) state=DEGRADED
+  PASS: stale fix is not current -> DEGRADED
+
+Test 4: modem fails (registration denied, mock), GPS fine
+[GNSS] SIMULATED module initialized (recorded NMEA for parser tests, NOT live GPS)
+[MODEM] MOCK modem initialised. Responses are SIMULATED, not from a real A7670C.
+[STATE] Initial state: BOOT
+[MODEM][MOCK] state: NOT_STARTED -> POWER_UP
+[STATE] BOOT -> SELF_TEST
+[STATE] SELF_TEST -> ACQUIRING_GPS
+[STATE] ACQUIRING_GPS -> NETWORK_CONNECTING
+[MODEM][MOCK] state: POWER_UP -> AT_CHECK
+[MODEM][MOCK] > AT
+[MODEM][MOCK] < OK
+[MODEM][MOCK] state: AT_CHECK -> SIM_CHECK
+[MODEM][MOCK] > AT+CPIN?
+[MODEM][MOCK] < +CPIN: READY
+[MODEM][MOCK] state: SIM_CHECK -> REGISTERING
+[MODEM][MOCK] > AT+CEREG?
+[MODEM][MOCK] < +CEREG: 0,3
+[MODEM][MOCK] state: REGISTERING -> FAILED_REG_DENIED
+[STATE] NETWORK_CONNECTING -> DEGRADED
+  status: GPS=VALID net=MOCK_FAILED(FAILED_REG_DENIED) state=DEGRADED
+  PASS: modem ends in FAILED_REG_DENIED (mock)
+  PASS: network failure -> DEGRADED
+
+Test 5: GPS never delivers a fix (acquire timeout)
+[GNSS] SIMULATED module initialized (recorded NMEA for parser tests, NOT live GPS)
+[MODEM] MOCK modem initialised. Responses are SIMULATED, not from a real A7670C.
+[STATE] Initial state: BOOT
+[MODEM][MOCK] state: NOT_STARTED -> POWER_UP
+[STATE] BOOT -> SELF_TEST
+[STATE] SELF_TEST -> ACQUIRING_GPS
+[MODEM][MOCK] state: POWER_UP -> AT_CHECK
+[MODEM][MOCK] > AT
+[MODEM][MOCK] < OK
+[MODEM][MOCK] state: AT_CHECK -> SIM_CHECK
+[MODEM][MOCK] > AT+CPIN?
+[MODEM][MOCK] < +CPIN: READY
+[MODEM][MOCK] state: SIM_CHECK -> REGISTERING
+[MODEM][MOCK] > AT+CEREG?
+[MODEM][MOCK] < +CEREG: 0,2
+[MODEM][MOCK] > AT+CEREG?
+[MODEM][MOCK] < +CEREG: 0,2
+[MODEM][MOCK] > AT+CEREG?
+[MODEM][MOCK] < +CEREG: 0,1
+[MODEM][MOCK] state: REGISTERING -> SIGNAL_CHECK
+[MODEM][MOCK] > AT+CSQ
+[MODEM][MOCK] < +CSQ: 18,99
+[MODEM][MOCK] state: SIGNAL_CHECK -> APN_CONFIG
+[MODEM][MOCK] > AT+CGDCONT=1,"IP","mock.apn.test"
+[MODEM][MOCK] < OK
+[MODEM][MOCK] state: APN_CONFIG -> DATA_SESSION
+[MODEM][MOCK] > AT+NETOPEN
+[MODEM][MOCK] < +NETOPEN: 0
+[MODEM][MOCK] state: DATA_SESSION -> READY_SIMULATED
+[MODEM] READY_SIMULATED: mock only. NOT a real registration or data session.
+[STATE] ACQUIRING_GPS -> DEGRADED
+  status: GPS=NO_FIX net=MOCK_READY(READY_SIMULATED) state=DEGRADED
+  PASS: GPS acquire timeout -> DEGRADED (PENDING CONFIRMATION)
+
+Test 6: self-test fails
+[STATE] Initial state: BOOT
+[STATE] BOOT -> SELF_TEST
+[STATE] SELF_TEST -> FAULT
+  PASS: SELF_TEST failure -> FAULT
+
+RESULT: 8 passed, 0 failed
+NOTE: recorded GPS data + MOCK modem. No real GPS, LTE registration or transmission.
+
+=== ACCIDENT DETECTION REPLAY (SIMULATED samples, placeholder thresholds) ===
+
+Run A: default configuration (jerk trigger OFF)
+  scenario                   ideal cand conf rej  verdict
+  normal_cruise              no       0    0   0  quiet
+  gentle_accel_stop          no       0    0   0  quiet
+  hard_braking               no       0    0   0  quiet
+  cornering_handling         no       0    0   0  quiet
+  pothole_single             no       0    0   0  quiet
+  pothole_double_hit         no       1    0   1  candidate rejected
+  bump_then_hard_stop        no       1    1   0  FALSE_POSITIVE
+  parked_door_slam           no       1    0   1  candidate rejected
+  minor_contact_drive        no       1    0   1  candidate rejected
+  frontal_impact_stop        yes      1    1   0  DETECTED
+  rollover_like              yes      1    1   0  DETECTED
+  impact_gps_missing         yes      1    1   0  DETECTED
+  bump_gps_missing_rough     no       1    0   1  candidate rejected
+  bump_gps_missing_smooth    no       1    1   0  FALSE_POSITIVE
+
+Run B: jerk trigger ON (more candidates expected)
+  scenario                   ideal cand conf rej  verdict
+  normal_cruise              no       0    0   0  quiet
+  gentle_accel_stop          no       0    0   0  quiet
+  hard_braking               no       0    0   0  quiet
+  cornering_handling         no       0    0   0  quiet
+  pothole_single             no       1    0   1  candidate rejected
+  pothole_double_hit         no       1    0   1  candidate rejected
+  bump_then_hard_stop        no       1    1   0  FALSE_POSITIVE
+  parked_door_slam           no       1    0   1  candidate rejected
+  minor_contact_drive        no       1    0   1  candidate rejected
+  frontal_impact_stop        yes      1    1   0  DETECTED
+  rollover_like              yes      1    1   0  DETECTED
+  impact_gps_missing         yes      1    1   0  DETECTED
+  bump_gps_missing_rough     no       1    0   1  candidate rejected
+  bump_gps_missing_smooth    no       1    1   0  FALSE_POSITIVE
+
+Run A: false positives = 2, missed = 0
+  PASS: no ideal accident was missed in run A (simulated)
+  PASS: exactly the 2 documented false-positive risks are reported (bump_then_hard_stop, bump_gps_missing_smooth)
+  PASS: raising the impact threshold removes the frontal-impact candidate
+  PASS: requireOrientation rejects frontal impact but keeps rollover-like
+
+Pipeline to state machine (simulated):
+[STATE] Initial state: BOOT
+[STATE] BOOT -> SELF_TEST
+[STATE] SELF_TEST -> ACQUIRING_GPS
+[STATE] ACQUIRING_GPS -> NETWORK_CONNECTING
+[STATE] NETWORK_CONNECTING -> OPERATIONAL
+  PASS: device is OPERATIONAL before the replay
+[EVENT] ACCIDENT CONFIRMED (simulated/test data): confirmed: stillness and speed drop
+[EVENT] queued (SIMULATED transmission) id=CC-IOT-01-B0000-000000
+  PASS: confirmed event is latched
+[STATE] OPERATIONAL -> EVENT_ACTIVE
+  PASS: OPERATIONAL -> EVENT_ACTIVE
+[STATE] EVENT_ACTIVE -> OPERATIONAL
+  PASS: event hold elapsed -> back to OPERATIONAL
+[STATE] OPERATIONAL -> DEGRADED
+  PASS: GPS lost -> DEGRADED
+[EVENT] ACCIDENT CONFIRMED (simulated/test data): confirmed: stillness and speed drop
+[EVENT] queued (SIMULATED transmission) id=CC-IOT-01-B0000-000001
+[STATE] DEGRADED -> EVENT_ACTIVE
+  PASS: event while DEGRADED -> EVENT_ACTIVE (not dropped)
+[STATE] Initial state: BOOT
+[STATE] BOOT -> SELF_TEST
+[STATE] SELF_TEST -> ACQUIRING_GPS
+[STATE] ACQUIRING_GPS -> NETWORK_CONNECTING
+[STATE] NETWORK_CONNECTING -> OPERATIONAL
+  PASS: pothole scenario: no event latched
+  PASS: pothole scenario: one candidate, rejected
+[GNSS] SIMULATED module initialized (recorded NMEA for parser tests, NOT live GPS)
+  PASS: recorded GNSS speed 22.4 kn -> 41.5 km/h for the detector
+[GNSS] SIMULATED module initialized (recorded NMEA for parser tests, NOT live GPS)
+  PASS: no GNSS fix -> speed unavailable for the detector
+
+RESULT: 42 passed, 0 failed
+NOTE: SIMULATED samples and placeholder thresholds. This is not validated accident detection.
+
+=== SOS, ACCIDENT EVENTS, RETRY AND OFFLINE QUEUE (SIMULATED: mock modem/backend, simulated flash) ===
+
+A. Manual SOS long press (simulated signal)
+  PASS: A1 contact bounce is ignored (no press registered)
+  PASS: A2 short press: feedback RELEASED_EARLY, no SOS
+  PASS: A3 long press triggers exactly once (not again while still held)
+  PASS: A3 trigger happens at the configured hold time
+  PASS: A3 progress feedback was reported while holding
+  PASS: A4 press during cooldown is ignored
+  PASS: A5 long press after the cooldown triggers again
+
+B. Event payloads (recorded sample coordinates, simulated time)
+  PASS: B1 SOS payload built
+  {"event_id":"CC-IOT-01-B0001-000001","device_id":"CC-IOT-01","schema_version":"1.0","sequence_number":1,"event_type":"sos","timestamp_utc":1792582500,"description":"SOS button pressed","latitude":48.117300,"longitude":11.516667,"location_age_s":0,"gnss_fix_quality":1,"snapshot":null,"simulated":true}
+  PASS: B1 has event ID, type, integer timestamp, location age, fix quality, snapshot null, simulated flag
+  PASS: B1 accepted by the mock backend rules
+  PASS: B2 no location and no time: everything null, no invented coordinates
+  PASS: B2 null location accepted by the mock backend rules
+  PASS: B3 last-known location is sent with its age, fix quality 0 (no current fix)
+  PASS: B4 accident event has type, accident type and confirmation state
+  PASS: B4 rollover and low-confidence variants
+  PASS: B5 ISO 8601 option produces the sample's text format
+  PASS: B6 buffer too small: returns 0 and an empty string
+  PASS: B7 current fix wins
+  PASS: B7 last-known location used with its age, quality 0
+  PASS: B7 last-known location older than the limit is reported as unavailable
+  PASS: B7 never had a fix: unavailable
+  PASS: B8 missing event_id rejected
+  PASS: B8 unknown event_type rejected
+  PASS: B8 latitude out of range rejected
+  PASS: B8 ISO text rejected when an integer timestamp is expected
+  PASS: B8 latitude present but longitude null rejected
+
+C. Queue, retry and acknowledgement (MOCK transport and backend, simulated flash)
+  PASS: C1 online: sent once, acknowledged, queue empty
+  PASS: C2 offline: nothing is sent, 3 events wait in the queue
+  PASS: C2 connectivity back: all 3 events sent and acknowledged
+  PASS: C2 events are sent oldest first
+  PASS: C3 first failure: retry scheduled after the base delay
+  PASS: C3 no attempt before the retry time
+  PASS: C3 second failure: delay doubled
+  PASS: C3 payload and event ID unchanged across retries
+  PASS: C3 third attempt acknowledged; backend got the identical payload
+  PASS: C4 ACK lost: the event stays queued
+  PASS: C4 retry with the same ID: backend sees a duplicate (1 unique event), then ACK
+  PASS: C5 rejected payload: marked REJECTED, kept for inspection, not retried
+  PASS: C6 first boot is boot 1
+  PASS: C6 after a reboot the events are restored unchanged and the boot counter increased
+  PASS: C6 a new event after the reboot gets a new, unique ID
+  PASS: C6 restored events are sent with their original IDs
+  simulated flash writes so far: 11
+  PASS: C7 queue full: oldest event dropped (policy PENDING CONFIRMATION), count reported
+
+D. SOS and accident events with GPS validity and the state machine (simulated)
+[GNSS] SIMULATED module initialized (recorded NMEA for parser tests, NOT live GPS)
+[STATE] Initial state: BOOT
+[STATE] BOOT -> SELF_TEST
+[STATE] SELF_TEST -> ACQUIRING_GPS
+[STATE] ACQUIRING_GPS -> NETWORK_CONNECTING
+[STATE] NETWORK_CONNECTING -> OPERATIONAL
+[EVENT] ACCIDENT CONFIRMED (simulated/test data): confirmed: stillness and speed drop
+[EVENT] queued (SIMULATED transmission) id=CC-IOT-01-B0001-000001
+  PASS: D1 confirmed accident created and queued one event
+  PASS: D1 accident type and confirmation state present
+  PASS: D1 location from the current recorded fix, quality 1, simulated integer timestamp
+[STATE] OPERATIONAL -> EVENT_ACTIVE
+  PASS: D1 state machine: OPERATIONAL to EVENT_ACTIVE
+  PASS: D1 event sent and (mock) acknowledged
+[GNSS] SIMULATED module initialized (recorded NMEA for parser tests, NOT live GPS)
+[STATE] Initial state: BOOT
+[STATE] BOOT -> SELF_TEST
+[STATE] SELF_TEST -> ACQUIRING_GPS
+[STATE] ACQUIRING_GPS -> NETWORK_CONNECTING
+[STATE] NETWORK_CONNECTING -> OPERATIONAL
+[SOS] feedback: PRESS_STARTED
+[SOS] feedback: TRIGGERED
+[EVENT] queued (SIMULATED transmission) id=CC-IOT-01-B0001-000001
+  PASS: D2 long press created an SOS event with the current location and its age
+[STATE] OPERATIONAL -> EVENT_ACTIVE
+  PASS: D2 state machine: SOS moves OPERATIONAL to EVENT_ACTIVE
+  PASS: D2 SOS sent and (mock) acknowledged
+[GNSS] SIMULATED module initialized (recorded NMEA for parser tests, NOT live GPS)
+[STATE] Initial state: BOOT
+[STATE] BOOT -> SELF_TEST
+[STATE] SELF_TEST -> ACQUIRING_GPS
+[SOS] feedback: PRESS_STARTED
+[SOS] feedback: TRIGGERED
+[EVENT] queued (SIMULATED transmission) id=CC-IOT-01-B0001-000001
+  PASS: D3 no fix and never had one: location unavailable, no fake coordinates
+  PASS: D3 start-up state is not disturbed
+  PASS: D3 no network: the SOS stays queued
+  PASS: D3 network available: the queued SOS is sent
+[GNSS] SIMULATED module initialized (recorded NMEA for parser tests, NOT live GPS)
+[SOS] feedback: PRESS_STARTED
+[SOS] feedback: TRIGGERED
+[EVENT] queued (SIMULATED transmission) id=CC-IOT-01-B0001-000001
+  PASS: D4 GPS lost: last valid location sent with its age, fix quality 0
+
+RESULT: 56 passed, 0 failed
+NOTE: simulated button, flash, modem and backend. An ACK here is not a real backend reply.
+
+=== CRASH CONNECT: SIMULATED TESTS (no hardware) ===
+Device ID: CC-IOT-01
+Simulation mode: YES
+[GNSS] SIMULATED module initialized (recorded NMEA for parser tests, NOT live GPS)
+[IMU] SIMULATED module initialized
+[COMMS] SIMULATION STUB initialized
+[COMMS] Physical A7670C modem: NOT CONNECTED
+[COMMS] Network connection: NOT ATTEMPTED
+[COMMS] Cellular connectivity is pending hardware integration.
+[IMU] SIMULATED TEST DATA
+
+--- TEST 1: normal start-up (GPS from recorded NMEA, network = simulated) ---
+[STATE] Initial state: BOOT
+[STATE] BOOT -> SELF_TEST
+[STATE] SELF_TEST -> ACQUIRING_GPS
+[STATE] ACQUIRING_GPS -> NETWORK_CONNECTING
+[STATE] NETWORK_CONNECTING -> OPERATIONAL
+{"device_id":"CC-IOT-01","timestamp_utc":null,"location":{"valid":true,"latitude":48.117300,"longitude":11.516667},"imu":{"available":true,"accel_x_g":0.020,"accel_y_g":0.010,"accel_z_g":0.980,"gyro_x_dps":0.500,"gyro_y_dps":0.200,"gyro_z_dps":1.000},"event_active":false,"device_state":"OPERATIONAL","simulated":true}
+Packet build: SUCCESS (NOT sent, no modem)
+
+--- TEST 2: no GPS fix -> location and timestamp must be null ---
+[GNSS] SIMULATED module initialized (recorded NMEA for parser tests, NOT live GPS)
+{"device_id":"CC-IOT-01","timestamp_utc":null,"location":{"valid":false,"latitude":null,"longitude":null},"imu":{"available":true,"accel_x_g":0.020,"accel_y_g":0.010,"accel_z_g":0.980,"gyro_x_dps":0.500,"gyro_y_dps":0.200,"gyro_z_dps":1.000},"event_active":false,"device_state":"OPERATIONAL","simulated":true}
+Packet build: SUCCESS (NOT sent, no modem)
+
+--- TEST 3: IMU unavailable -> IMU values must be null ---
+{"device_id":"CC-IOT-01","timestamp_utc":null,"location":{"valid":true,"latitude":48.117300,"longitude":11.516667},"imu":{"available":false,"accel_x_g":null,"accel_y_g":null,"accel_z_g":null,"gyro_x_dps":null,"gyro_y_dps":null,"gyro_z_dps":null},"event_active":false,"device_state":"OPERATIONAL","simulated":true}
+Packet build: SUCCESS (NOT sent, no modem)
+
+--- TEST 4: movement burst -> EVENT_ACTIVE (SIMULATED test values) ---
+[STATE] Initial state: BOOT
+[STATE] BOOT -> SELF_TEST
+[STATE] SELF_TEST -> ACQUIRING_GPS
+[STATE] ACQUIRING_GPS -> NETWORK_CONNECTING
+[STATE] NETWORK_CONNECTING -> OPERATIONAL
+Acceleration magnitude (g): 2.474
+Placeholder threshold (g): 2.00
+[STATE] OPERATIONAL -> EVENT_ACTIVE
+{"device_id":"CC-IOT-01","timestamp_utc":null,"location":{"valid":true,"latitude":48.117300,"longitude":11.516667},"imu":{"available":true,"accel_x_g":1.800,"accel_y_g":1.200,"accel_z_g":1.200,"gyro_x_dps":90.000,"gyro_y_dps":60.000,"gyro_z_dps":40.000},"event_active":true,"device_state":"EVENT_ACTIVE","simulated":true}
+Packet build: SUCCESS (NOT sent, no modem)
+[STATE] EVENT_ACTIVE -> OPERATIONAL
+
+--- TEST 5: GPS fix lost -> DEGRADED, then recovery ---
+[STATE] Initial state: BOOT
+[STATE] BOOT -> SELF_TEST
+[STATE] SELF_TEST -> ACQUIRING_GPS
+[STATE] ACQUIRING_GPS -> NETWORK_CONNECTING
+[STATE] NETWORK_CONNECTING -> OPERATIONAL
+[STATE] OPERATIONAL -> DEGRADED
+[STATE] DEGRADED -> OPERATIONAL
+
+--- TEST 6: self-test fails -> FAULT; illegal transition rejected ---
+[STATE] Initial state: BOOT
+[STATE] BOOT -> SELF_TEST
+[STATE] SELF_TEST -> FAULT
+[STATE] REJECTED (not allowed): FAULT -> OPERATIONAL
+
+NOTE: GPS = recorded NMEA sample (not live), IMU = test values,
+network = simulated condition. No cellular transmission occurred.
+
+##### SUMMARY #####
+Failed checks across self-checking suites: 0
+Recorded GPS data + mock modem + simulated sensor values only.

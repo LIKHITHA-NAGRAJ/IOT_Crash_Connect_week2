@@ -1,0 +1,78 @@
+# Replay log, default configuration (jerk trigger off)
+# SIMULATED scenario data replayed through the staged accident detector (PC build of the same code).
+# Placeholder thresholds. Not validated accident detection, not real sensor data.
+
+=== 00_normal_cruise.csv
+Replaying 00_normal_cruise.csv (placeholder thresholds; impact 3.0 g, window 6000 ms, jerk off)
+Rows 1500 | candidates 0 | confirmed 0 | rejected 0
+
+=== 01_gentle_accel_stop.csv
+Replaying 01_gentle_accel_stop.csv (placeholder thresholds; impact 3.0 g, window 6000 ms, jerk off)
+Rows 1350 | candidates 0 | confirmed 0 | rejected 0
+
+=== 02_hard_braking.csv
+Replaying 02_hard_braking.csv (placeholder thresholds; impact 3.0 g, window 6000 ms, jerk off)
+Rows 1050 | candidates 0 | confirmed 0 | rejected 0
+
+=== 03_cornering_handling.csv
+Replaying 03_cornering_handling.csv (placeholder thresholds; impact 3.0 g, window 6000 ms, jerk off)
+Rows 1350 | candidates 0 | confirmed 0 | rejected 0
+
+=== 04_pothole_single.csv
+Replaying 04_pothole_single.csv (placeholder thresholds; impact 3.0 g, window 6000 ms, jerk off)
+Rows 901 | candidates 0 | confirmed 0 | rejected 0
+
+=== 05_pothole_double_hit.csv
+Replaying 05_pothole_double_hit.csv (placeholder thresholds; impact 3.0 g, window 6000 ms, jerk off)
+  decision at 16020 ms (candidate 10020 ms): rejected: vehicle still moving after impact
+    peak 3.6 g, gyro peak 4 dps (spike no), orientation 0 deg (unchanged), stillness no, speed no drop
+Rows 1002 | candidates 1 | confirmed 0 | rejected 1
+
+=== 06_bump_then_hard_stop.csv
+Replaying 06_bump_then_hard_stop.csv (placeholder thresholds; impact 3.0 g, window 6000 ms, jerk off)
+  decision at 16020 ms (candidate 10020 ms): confirmed: stillness and speed drop
+    peak 3.6 g, gyro peak 4 dps (spike no), orientation 1 deg (unchanged), stillness yes, speed drop
+Rows 1032 | candidates 1 | confirmed 1 | rejected 0
+
+=== 07_parked_door_slam.csv
+Replaying 07_parked_door_slam.csv (placeholder thresholds; impact 3.0 g, window 6000 ms, jerk off)
+  decision at 16020 ms (candidate 10020 ms): rejected: vehicle not moving before impact
+    peak 3.4 g, gyro peak 1 dps (spike no), orientation 0 deg (unchanged), stillness yes, speed no drop
+Rows 1002 | candidates 1 | confirmed 0 | rejected 1
+
+=== 08_minor_contact_drive.csv
+Replaying 08_minor_contact_drive.csv (placeholder thresholds; impact 3.0 g, window 6000 ms, jerk off)
+  decision at 16020 ms (candidate 10020 ms): rejected: vehicle still moving after impact
+    peak 5.2 g, gyro peak 19 dps (spike no), orientation 0 deg (unchanged), stillness no, speed no drop
+Rows 1003 | candidates 1 | confirmed 0 | rejected 1
+
+=== 09_frontal_impact_stop.csv
+Replaying 09_frontal_impact_stop.csv (placeholder thresholds; impact 3.0 g, window 6000 ms, jerk off)
+  decision at 21020 ms (candidate 15020 ms): confirmed: stillness and speed drop
+    peak 9.1 g, gyro peak 24 dps (spike no), orientation 0 deg (unchanged), stillness yes, speed drop
+Rows 1279 | candidates 1 | confirmed 1 | rejected 0
+
+=== 10_rollover_like.csv
+Replaying 10_rollover_like.csv (placeholder thresholds; impact 3.0 g, window 6000 ms, jerk off)
+  decision at 21020 ms (candidate 15020 ms): confirmed: stillness and speed drop
+    peak 6.4 g, gyro peak 442 dps (spike yes), orientation 90 deg (changed), stillness yes, speed drop
+Rows 1314 | candidates 1 | confirmed 1 | rejected 0
+
+=== 11_impact_gps_missing.csv
+Replaying 11_impact_gps_missing.csv (placeholder thresholds; impact 3.0 g, window 6000 ms, jerk off)
+  decision at 21020 ms (candidate 15020 ms): confirmed: stillness only (no GPS speed, low confidence)
+    peak 9.1 g, gyro peak 26 dps (spike no), orientation 0 deg (unchanged), stillness yes, speed unknown, LOW CONFIDENCE
+Rows 1279 | candidates 1 | confirmed 1 | rejected 0
+
+=== 12_bump_gps_missing_rough.csv
+Replaying 12_bump_gps_missing_rough.csv (placeholder thresholds; impact 3.0 g, window 6000 ms, jerk off)
+  decision at 16020 ms (candidate 10020 ms): rejected: no stillness or speed drop
+    peak 3.6 g, gyro peak 5 dps (spike no), orientation 0 deg (unchanged), stillness no, speed unknown
+Rows 1002 | candidates 1 | confirmed 0 | rejected 1
+
+=== 13_bump_gps_missing_smooth.csv
+Replaying 13_bump_gps_missing_smooth.csv (placeholder thresholds; impact 3.0 g, window 6000 ms, jerk off)
+  decision at 16020 ms (candidate 10020 ms): confirmed: stillness only (no GPS speed, low confidence)
+    peak 3.6 g, gyro peak 5 dps (spike no), orientation 0 deg (unchanged), stillness yes, speed unknown, LOW CONFIDENCE
+Rows 1002 | candidates 1 | confirmed 1 | rejected 0
+
