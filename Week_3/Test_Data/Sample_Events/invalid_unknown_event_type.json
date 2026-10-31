@@ -1,1 +1,0 @@
-{"event_id":"CC-IOT-01-B0001-000006","device_id":"CC-IOT-01","schema_version":"1.0","sequence_number":6,"event_type":"fire","timestamp_utc":1792582500,"description":"SOS button pressed","latitude":48.117300,"longitude":11.516667,"location_age_s":0,"gnss_fix_quality":1,"snapshot":null,"simulated":true}
