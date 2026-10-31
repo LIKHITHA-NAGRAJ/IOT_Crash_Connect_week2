@@ -1,0 +1,12 @@
+scenario,input_type,samples,invalid_rows,expected_decision,decision,accident_type,candidates,confirmed,rejected,peak_g,max_rotation_deg,speed_check,time_to_decision_ms,reason,result,description
+normal_driving,SIMULATED_SYNTHETIC,1000,0,NONE,NONE,,0,0,0,0.00,0,-,0,,PASS,""Steady driving at 50 km/h, small noise""
+hard_braking,SIMULATED_SYNTHETIC,1000,0,NONE,NONE,,0,0,0,0.00,0,-,0,,PASS,""0.5 g braking for 2 s, 60 to 20 km/h""
+sharp_cornering,SIMULATED_SYNTHETIC,1000,0,NONE,NONE,,0,0,0,0.00,0,-,0,,PASS,""0.6 g lateral for 3 s, 25 dps yaw""
+pothole_spike,SIMULATED_SYNTHETIC,1000,0,NONE,NONE,,0,0,0,0.00,0,-,0,,PASS,""Single 4.5 g sample at 8 s, driving continues""
+speed_bump,SIMULATED_SYNTHETIC,1000,0,NONE,NONE,,0,0,0,0.00,0,-,0,,PASS,"2.5 g for 60 ms at 20 km/h"
+device_knock_gps_ok,SIMULATED_SYNTHETIC,1000,0,REJECTED,REJECTED,,1,0,1,6.08,4,NO,5000,still after impact but GPS speed still high,PASS,""6 g for 60 ms, vehicle keeps moving at 40 km/h, GPS available""
+device_knock_no_gps,SIMULATED_SYNTHETIC,1000,0,REJECTED,CONFIRMED,IMPACT,1,1,0,6.08,4,UNKNOWN,1040,impact followed by stillness,FAIL,""Same knock without GPS: known false-positive risk, expected to fail""
+frontal_impact,SIMULATED_SYNTHETIC,1000,0,CONFIRMED,CONFIRMED,IMPACT,1,1,0,8.12,2,YES,1980,impact followed by stillness,PASS,""8 g for 80 ms at 50 km/h, tumble, stillness, GPS speed to 0""
+frontal_impact_no_gps,SIMULATED_SYNTHETIC,1000,0,CONFIRMED,CONFIRMED,IMPACT,1,1,0,8.12,2,UNKNOWN,1480,impact followed by stillness,PASS,"Same impact with no GPS fix: confirmed from IMU only"
+rollover,SIMULATED_SYNTHETIC,1000,0,CONFIRMED,CONFIRMED,ROLLOVER_SUSPECTED,1,1,0,6.78,92,YES,1980,impact followed by stillness,PASS,""6 g, rotation of 90 degrees, stillness on its side""
+sensor_dropout,SIMULATED_SYNTHETIC,950,50,NONE,NONE,,0,0,0,0.00,0,-,0,,PASS,""1 s of invalid IMU rows, no event""

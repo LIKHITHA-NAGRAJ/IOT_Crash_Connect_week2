@@ -1,0 +1,110 @@
+
+CRASH CONNECT - IoT firmware skeleton (Week 2)
+device=CRASH_ESP32_01 fw=0.2.0-week2 packet=0.1-DRAFT
+Hardware access is STUBBED. GPS = recorded NMEA, IMU/SOS/network = test inputs.
+[SIM] SIMULATED / TEST INPUTS ENABLED - not real GPS, IMU, SOS or network data
+[STATE] -> BOOT
+[SIM][TEST INPUT] t=0.1s no GPS signal yet, receiver searching
+[SIM][TEST INPUT] t=0.1s network down
+[SIM][TEST INPUT] t=0.1s IMU stationary
+[STATE] t=2.0s BOOT -> SELF_TEST (boot complete)
+[SELF_TEST] PASS
+[STATUS] t=2.0s state=SELF_TEST gnss=OK fix=NO imu=OK comms=DOWN event=NONE sos=NO faults=0x00
+[STATE] t=3.0s SELF_TEST -> ACQUIRING_GPS (self-test passed)
+[STATUS] t=3.0s state=ACQUIRING_GPS gnss=OK fix=NO imu=OK comms=DOWN event=NONE sos=NO faults=0x00
+[SIM][TEST INPUT] t=4.0s corrupted NMEA sentence arrives
+[SIM][TEST INPUT] t=5.0s GPS signal available
+[STATE] t=6.0s ACQUIRING_GPS -> NETWORK_CONNECTING (GPS fix acquired)
+[STATUS] t=6.0s state=NETWORK_CONNECTING gnss=OK fix=YES imu=OK comms=DOWN event=NONE sos=NO faults=0x00
+[SIM][TEST INPUT] t=9.0s network available
+[STATE] t=10.0s NETWORK_CONNECTING -> OPERATIONAL (network connected)
+[STATUS] t=10.0s state=OPERATIONAL gnss=OK fix=YES imu=OK comms=UP event=NONE sos=NO faults=0x00
+[POWER][STUB] battery voltage not available (ADC pin and divider: PENDING CONFIRMATION)
+[TELEMETRY] {"packet_version":"0.1-DRAFT","device_id":"CRASH_ESP32_01","seq":1,"uptime_ms":10000,"data_source":"SIMULATED","device_state":"OPERATIONAL","timestamp_utc":"1994-03-23T12:35:19Z","location":{"fix":true,"latitude":48.117300,"longitude":11.516667,"altitude_m":545.4,"speed_kmh":41.5,"satellites":8,"hdop":0.90},"motion":{"accel_x_g":0.020,"accel_y_g":0.000,"accel_z_g":1.000,"gyro_x_dps":0.6,"gyro_y_dps":0.1,"gyro_z_dps":1.1,"accel_magnitude_g":1.000},"event":{"type":"NONE","sos_active":false},"comms":{"connected":true},"battery_mv":null,"fault_flags":0}
+[COMMS][STUB] would send 555 bytes, topic/path: PENDING_CONFIRMATION, transport: PENDING_CONFIRMATION
+[TELEMETRY] {"packet_version":"0.1-DRAFT","device_id":"CRASH_ESP32_01","seq":2,"uptime_ms":15000,"data_source":"SIMULATED","device_state":"OPERATIONAL","timestamp_utc":"1994-03-23T12:35:20Z","location":{"fix":true,"latitude":48.117417,"longitude":11.516867,"altitude_m":545.6,"speed_kmh":40.6,"satellites":8,"hdop":0.90},"motion":{"accel_x_g":0.020,"accel_y_g":0.000,"accel_z_g":1.000,"gyro_x_dps":0.6,"gyro_y_dps":0.1,"gyro_z_dps":1.1,"accel_magnitude_g":1.000},"event":{"type":"NONE","sos_active":false},"comms":{"connected":true},"battery_mv":null,"fault_flags":0}
+[COMMS][STUB] would send 555 bytes, topic/path: PENDING_CONFIRMATION, transport: PENDING_CONFIRMATION
+[SIM][TEST INPUT] t=16.0s IMU tilt/rotation (below impact threshold)
+[SIM][TEST INPUT] t=19.0s IMU movement (below impact threshold)
+[TELEMETRY] {"packet_version":"0.1-DRAFT","device_id":"CRASH_ESP32_01","seq":3,"uptime_ms":20000,"data_source":"SIMULATED","device_state":"OPERATIONAL","timestamp_utc":"1994-03-23T12:35:19Z","location":{"fix":true,"latitude":48.117300,"longitude":11.516667,"altitude_m":545.4,"speed_kmh":41.5,"satellites":8,"hdop":0.90},"motion":{"accel_x_g":1.200,"accel_y_g":0.400,"accel_z_g":0.800,"gyro_x_dps":45.0,"gyro_y_dps":20.0,"gyro_z_dps":10.0,"accel_magnitude_g":1.497},"event":{"type":"NONE","sos_active":false},"comms":{"connected":true},"battery_mv":null,"fault_flags":0}
+[COMMS][STUB] would send 558 bytes, topic/path: PENDING_CONFIRMATION, transport: PENDING_CONFIRMATION
+[SIM][TEST INPUT] t=22.0s IMU impact test values (above placeholder threshold)
+[STATE] t=23.0s OPERATIONAL -> EVENT_ACTIVE (event detected)
+[STATUS] t=23.0s state=EVENT_ACTIVE gnss=OK fix=YES imu=OK comms=UP event=IMPACT_SUSPECTED sos=NO faults=0x00
+[TELEMETRY] {"packet_version":"0.1-DRAFT","device_id":"CRASH_ESP32_01","seq":4,"uptime_ms":23000,"data_source":"SIMULATED","device_state":"EVENT_ACTIVE","timestamp_utc":"1994-03-23T12:35:20Z","location":{"fix":true,"latitude":48.117417,"longitude":11.516867,"altitude_m":545.6,"speed_kmh":40.6,"satellites":8,"hdop":0.90},"motion":{"accel_x_g":3.800,"accel_y_g":-2.900,"accel_z_g":2.600,"gyro_x_dps":280.0,"gyro_y_dps":190.0,"gyro_z_dps":120.0,"accel_magnitude_g":5.442},"event":{"type":"IMPACT_SUSPECTED","sos_active":false},"comms":{"connected":true},"battery_mv":null,"fault_flags":0}
+[COMMS][STUB] would send 575 bytes, topic/path: PENDING_CONFIRMATION, transport: PENDING_CONFIRMATION
+[TELEMETRY] {"packet_version":"0.1-DRAFT","device_id":"CRASH_ESP32_01","seq":5,"uptime_ms":24000,"data_source":"SIMULATED","device_state":"EVENT_ACTIVE","timestamp_utc":"1994-03-23T12:35:19Z","location":{"fix":true,"latitude":48.117300,"longitude":11.516667,"altitude_m":545.4,"speed_kmh":41.5,"satellites":8,"hdop":0.90},"motion":{"accel_x_g":2.200,"accel_y_g":-1.400,"accel_z_g":1.900,"gyro_x_dps":160.0,"gyro_y_dps":100.0,"gyro_z_dps":70.0,"accel_magnitude_g":3.226},"event":{"type":"NONE","sos_active":false},"comms":{"connected":true},"battery_mv":null,"fault_flags":0}
+[COMMS][STUB] would send 562 bytes, topic/path: PENDING_CONFIRMATION, transport: PENDING_CONFIRMATION
+[SIM][TEST INPUT] t=24.0s IMU stationary again
+[TELEMETRY] {"packet_version":"0.1-DRAFT","device_id":"CRASH_ESP32_01","seq":6,"uptime_ms":25000,"data_source":"SIMULATED","device_state":"EVENT_ACTIVE","timestamp_utc":"1994-03-23T12:35:20Z","location":{"fix":true,"latitude":48.117417,"longitude":11.516867,"altitude_m":545.6,"speed_kmh":40.6,"satellites":8,"hdop":0.90},"motion":{"accel_x_g":0.020,"accel_y_g":0.010,"accel_z_g":0.980,"gyro_x_dps":0.5,"gyro_y_dps":0.2,"gyro_z_dps":1.0,"accel_magnitude_g":0.980},"event":{"type":"NONE","sos_active":false},"comms":{"connected":true},"battery_mv":null,"fault_flags":0}
+[COMMS][STUB] would send 556 bytes, topic/path: PENDING_CONFIRMATION, transport: PENDING_CONFIRMATION
+[TELEMETRY] {"packet_version":"0.1-DRAFT","device_id":"CRASH_ESP32_01","seq":7,"uptime_ms":26000,"data_source":"SIMULATED","device_state":"EVENT_ACTIVE","timestamp_utc":"1994-03-23T12:35:19Z","location":{"fix":true,"latitude":48.117300,"longitude":11.516667,"altitude_m":545.4,"speed_kmh":41.5,"satellites":8,"hdop":0.90},"motion":{"accel_x_g":0.020,"accel_y_g":0.000,"accel_z_g":1.000,"gyro_x_dps":0.6,"gyro_y_dps":0.1,"gyro_z_dps":1.1,"accel_magnitude_g":1.000},"event":{"type":"NONE","sos_active":false},"comms":{"connected":true},"battery_mv":null,"fault_flags":0}
+[COMMS][STUB] would send 556 bytes, topic/path: PENDING_CONFIRMATION, transport: PENDING_CONFIRMATION
+[STATE] t=27.0s EVENT_ACTIVE -> OPERATIONAL (event cleared)
+[STATUS] t=27.0s state=OPERATIONAL gnss=OK fix=YES imu=OK comms=UP event=NONE sos=NO faults=0x00
+[TELEMETRY] {"packet_version":"0.1-DRAFT","device_id":"CRASH_ESP32_01","seq":8,"uptime_ms":31000,"data_source":"SIMULATED","device_state":"OPERATIONAL","timestamp_utc":"1994-03-23T12:35:20Z","location":{"fix":true,"latitude":48.117417,"longitude":11.516867,"altitude_m":545.6,"speed_kmh":40.6,"satellites":8,"hdop":0.90},"motion":{"accel_x_g":0.020,"accel_y_g":0.000,"accel_z_g":1.000,"gyro_x_dps":0.6,"gyro_y_dps":0.1,"gyro_z_dps":1.1,"accel_magnitude_g":1.000},"event":{"type":"NONE","sos_active":false},"comms":{"connected":true},"battery_mv":null,"fault_flags":0}
+[COMMS][STUB] would send 555 bytes, topic/path: PENDING_CONFIRMATION, transport: PENDING_CONFIRMATION
+[SIM][TEST INPUT] t=34.0s GPS signal lost
+[STATE] t=35.0s OPERATIONAL -> DEGRADED (GPS fix lost)
+[STATUS] t=35.0s state=DEGRADED gnss=OK fix=NO imu=OK comms=UP event=NONE sos=NO faults=0x00
+[TELEMETRY] {"packet_version":"0.1-DRAFT","device_id":"CRASH_ESP32_01","seq":9,"uptime_ms":36000,"data_source":"SIMULATED","device_state":"DEGRADED","timestamp_utc":null,"location":{"fix":false,"latitude":null,"longitude":null,"altitude_m":null,"speed_kmh":null,"satellites":0,"hdop":null},"motion":{"accel_x_g":0.020,"accel_y_g":0.000,"accel_z_g":1.000,"gyro_x_dps":0.6,"gyro_y_dps":0.1,"gyro_z_dps":1.1,"accel_magnitude_g":1.000},"event":{"type":"NONE","sos_active":false},"comms":{"connected":true},"battery_mv":null,"fault_flags":0}
+[COMMS][STUB] would send 524 bytes, topic/path: PENDING_CONFIRMATION, transport: PENDING_CONFIRMATION
+[SIM][TEST INPUT] t=40.0s GPS signal back
+[STATE] t=41.0s DEGRADED -> OPERATIONAL (recovered)
+[STATUS] t=41.0s state=OPERATIONAL gnss=OK fix=YES imu=OK comms=UP event=NONE sos=NO faults=0x00
+[TELEMETRY] {"packet_version":"0.1-DRAFT","device_id":"CRASH_ESP32_01","seq":10,"uptime_ms":41000,"data_source":"SIMULATED","device_state":"OPERATIONAL","timestamp_utc":"1994-03-23T12:35:20Z","location":{"fix":true,"latitude":48.117417,"longitude":11.516867,"altitude_m":545.6,"speed_kmh":40.6,"satellites":8,"hdop":0.90},"motion":{"accel_x_g":0.020,"accel_y_g":0.000,"accel_z_g":1.000,"gyro_x_dps":0.6,"gyro_y_dps":0.1,"gyro_z_dps":1.1,"accel_magnitude_g":1.000},"event":{"type":"NONE","sos_active":false},"comms":{"connected":true},"battery_mv":null,"fault_flags":0}
+[COMMS][STUB] would send 556 bytes, topic/path: PENDING_CONFIRMATION, transport: PENDING_CONFIRMATION
+[TELEMETRY] {"packet_version":"0.1-DRAFT","device_id":"CRASH_ESP32_01","seq":11,"uptime_ms":46000,"data_source":"SIMULATED","device_state":"OPERATIONAL","timestamp_utc":"1994-03-23T12:35:19Z","location":{"fix":true,"latitude":48.117300,"longitude":11.516667,"altitude_m":545.4,"speed_kmh":41.5,"satellites":8,"hdop":0.90},"motion":{"accel_x_g":0.020,"accel_y_g":0.000,"accel_z_g":1.000,"gyro_x_dps":0.6,"gyro_y_dps":0.1,"gyro_z_dps":1.1,"accel_magnitude_g":1.000},"event":{"type":"NONE","sos_active":false},"comms":{"connected":true},"battery_mv":null,"fault_flags":0}
+[COMMS][STUB] would send 556 bytes, topic/path: PENDING_CONFIRMATION, transport: PENDING_CONFIRMATION
+[SIM][TEST INPUT] t=46.0s network lost
+[STATE] t=47.0s OPERATIONAL -> DEGRADED (network lost)
+[STATUS] t=47.0s state=DEGRADED gnss=OK fix=YES imu=OK comms=DOWN event=NONE sos=NO faults=0x00
+[TELEMETRY] {"packet_version":"0.1-DRAFT","device_id":"CRASH_ESP32_01","seq":12,"uptime_ms":51000,"data_source":"SIMULATED","device_state":"DEGRADED","timestamp_utc":"1994-03-23T12:35:20Z","location":{"fix":true,"latitude":48.117417,"longitude":11.516867,"altitude_m":545.6,"speed_kmh":40.6,"satellites":8,"hdop":0.90},"motion":{"accel_x_g":0.020,"accel_y_g":0.000,"accel_z_g":1.000,"gyro_x_dps":0.6,"gyro_y_dps":0.1,"gyro_z_dps":1.1,"accel_magnitude_g":1.000},"event":{"type":"NONE","sos_active":false},"comms":{"connected":false},"battery_mv":null,"fault_flags":0}
+[COMMS][STUB] NOT SENT, network down (554 bytes)
+[SIM][TEST INPUT] t=53.0s network back
+[STATE] t=54.0s DEGRADED -> OPERATIONAL (recovered)
+[STATUS] t=54.0s state=OPERATIONAL gnss=OK fix=YES imu=OK comms=UP event=NONE sos=NO faults=0x00
+[TELEMETRY] {"packet_version":"0.1-DRAFT","device_id":"CRASH_ESP32_01","seq":13,"uptime_ms":56000,"data_source":"SIMULATED","device_state":"OPERATIONAL","timestamp_utc":"1994-03-23T12:35:19Z","location":{"fix":true,"latitude":48.117300,"longitude":11.516667,"altitude_m":545.4,"speed_kmh":41.5,"satellites":8,"hdop":0.90},"motion":{"accel_x_g":0.020,"accel_y_g":0.000,"accel_z_g":1.000,"gyro_x_dps":0.6,"gyro_y_dps":0.1,"gyro_z_dps":1.1,"accel_magnitude_g":1.000},"event":{"type":"NONE","sos_active":false},"comms":{"connected":true},"battery_mv":null,"fault_flags":0}
+[COMMS][STUB] would send 556 bytes, topic/path: PENDING_CONFIRMATION, transport: PENDING_CONFIRMATION
+[SIM][TEST INPUT] t=56.0s SOS button pressed
+[STATE] t=57.0s OPERATIONAL -> EVENT_ACTIVE (event detected)
+[STATUS] t=57.0s state=EVENT_ACTIVE gnss=OK fix=YES imu=OK comms=UP event=SOS sos=YES faults=0x00
+[TELEMETRY] {"packet_version":"0.1-DRAFT","device_id":"CRASH_ESP32_01","seq":14,"uptime_ms":57000,"data_source":"SIMULATED","device_state":"EVENT_ACTIVE","timestamp_utc":"1994-03-23T12:35:20Z","location":{"fix":true,"latitude":48.117417,"longitude":11.516867,"altitude_m":545.6,"speed_kmh":40.6,"satellites":8,"hdop":0.90},"motion":{"accel_x_g":0.020,"accel_y_g":0.020,"accel_z_g":0.990,"gyro_x_dps":0.4,"gyro_y_dps":0.2,"gyro_z_dps":0.8,"accel_magnitude_g":0.990},"event":{"type":"SOS","sos_active":true},"comms":{"connected":true},"battery_mv":null,"fault_flags":0}
+[COMMS][STUB] would send 555 bytes, topic/path: PENDING_CONFIRMATION, transport: PENDING_CONFIRMATION
+[TELEMETRY] {"packet_version":"0.1-DRAFT","device_id":"CRASH_ESP32_01","seq":15,"uptime_ms":58000,"data_source":"SIMULATED","device_state":"EVENT_ACTIVE","timestamp_utc":"1994-03-23T12:35:19Z","location":{"fix":true,"latitude":48.117300,"longitude":11.516667,"altitude_m":545.4,"speed_kmh":41.5,"satellites":8,"hdop":0.90},"motion":{"accel_x_g":0.010,"accel_y_g":0.020,"accel_z_g":0.990,"gyro_x_dps":0.4,"gyro_y_dps":0.3,"gyro_z_dps":0.9,"accel_magnitude_g":0.990},"event":{"type":"SOS","sos_active":true},"comms":{"connected":true},"battery_mv":null,"fault_flags":0}
+[COMMS][STUB] would send 555 bytes, topic/path: PENDING_CONFIRMATION, transport: PENDING_CONFIRMATION
+[SIM][TEST INPUT] t=58.0s SOS button released
+[TELEMETRY] {"packet_version":"0.1-DRAFT","device_id":"CRASH_ESP32_01","seq":16,"uptime_ms":59000,"data_source":"SIMULATED","device_state":"EVENT_ACTIVE","timestamp_utc":"1994-03-23T12:35:20Z","location":{"fix":true,"latitude":48.117417,"longitude":11.516867,"altitude_m":545.6,"speed_kmh":40.6,"satellites":8,"hdop":0.90},"motion":{"accel_x_g":0.010,"accel_y_g":0.010,"accel_z_g":0.980,"gyro_x_dps":0.5,"gyro_y_dps":0.2,"gyro_z_dps":1.0,"accel_magnitude_g":0.980},"event":{"type":"NONE","sos_active":false},"comms":{"connected":true},"battery_mv":null,"fault_flags":0}
+[COMMS][STUB] would send 557 bytes, topic/path: PENDING_CONFIRMATION, transport: PENDING_CONFIRMATION
+[TELEMETRY] {"packet_version":"0.1-DRAFT","device_id":"CRASH_ESP32_01","seq":17,"uptime_ms":60000,"data_source":"SIMULATED","device_state":"EVENT_ACTIVE","timestamp_utc":"1994-03-23T12:35:19Z","location":{"fix":true,"latitude":48.117300,"longitude":11.516667,"altitude_m":545.4,"speed_kmh":41.5,"satellites":8,"hdop":0.90},"motion":{"accel_x_g":0.020,"accel_y_g":0.010,"accel_z_g":0.980,"gyro_x_dps":0.5,"gyro_y_dps":0.2,"gyro_z_dps":1.0,"accel_magnitude_g":0.980},"event":{"type":"NONE","sos_active":false},"comms":{"connected":true},"battery_mv":null,"fault_flags":0}
+[COMMS][STUB] would send 557 bytes, topic/path: PENDING_CONFIRMATION, transport: PENDING_CONFIRMATION
+[STATE] t=61.0s EVENT_ACTIVE -> OPERATIONAL (event cleared)
+[STATUS] t=61.0s state=OPERATIONAL gnss=OK fix=YES imu=OK comms=UP event=NONE sos=NO faults=0x00
+[TELEMETRY] {"packet_version":"0.1-DRAFT","device_id":"CRASH_ESP32_01","seq":18,"uptime_ms":65000,"data_source":"SIMULATED","device_state":"OPERATIONAL","timestamp_utc":"1994-03-23T12:35:20Z","location":{"fix":true,"latitude":48.117417,"longitude":11.516867,"altitude_m":545.6,"speed_kmh":40.6,"satellites":8,"hdop":0.90},"motion":{"accel_x_g":0.020,"accel_y_g":0.010,"accel_z_g":0.980,"gyro_x_dps":0.5,"gyro_y_dps":0.2,"gyro_z_dps":1.0,"accel_magnitude_g":0.980},"event":{"type":"NONE","sos_active":false},"comms":{"connected":true},"battery_mv":null,"fault_flags":0}
+[COMMS][STUB] would send 556 bytes, topic/path: PENDING_CONFIRMATION, transport: PENDING_CONFIRMATION
+[SIM][TEST INPUT] t=66.0s critical fault injected
+[STATE] t=67.0s OPERATIONAL -> FAULT (critical fault)
+[STATUS] t=67.0s state=FAULT gnss=OK fix=YES imu=OK comms=UP event=NONE sos=NO faults=0x20
+[SIM][TEST INPUT] t=70.0s critical fault cleared
+[STATE] t=71.0s FAULT -> BOOT (fault cleared, restarting)
+[STATUS] t=71.0s state=BOOT gnss=OK fix=YES imu=OK comms=UP event=NONE sos=NO faults=0x00
+[STATE] t=72.0s BOOT -> SELF_TEST (boot complete)
+[SELF_TEST] PASS
+[STATUS] t=72.0s state=SELF_TEST gnss=OK fix=YES imu=OK comms=UP event=NONE sos=NO faults=0x00
+[STATE] t=73.0s SELF_TEST -> ACQUIRING_GPS (self-test passed)
+[STATUS] t=73.0s state=ACQUIRING_GPS gnss=OK fix=YES imu=OK comms=UP event=NONE sos=NO faults=0x00
+[STATE] t=73.1s ACQUIRING_GPS -> NETWORK_CONNECTING (GPS fix acquired)
+[STATUS] t=73.1s state=NETWORK_CONNECTING gnss=OK fix=YES imu=OK comms=UP event=NONE sos=NO faults=0x00
+[STATE] t=73.2s NETWORK_CONNECTING -> OPERATIONAL (network connected)
+[STATUS] t=73.2s state=OPERATIONAL gnss=OK fix=YES imu=OK comms=UP event=NONE sos=NO faults=0x00
+[TELEMETRY] {"packet_version":"0.1-DRAFT","device_id":"CRASH_ESP32_01","seq":19,"uptime_ms":73200,"data_source":"SIMULATED","device_state":"OPERATIONAL","timestamp_utc":"1994-03-23T12:35:20Z","location":{"fix":true,"latitude":48.117417,"longitude":11.516867,"altitude_m":545.6,"speed_kmh":40.6,"satellites":8,"hdop":0.90},"motion":{"accel_x_g":0.010,"accel_y_g":0.010,"accel_z_g":0.980,"gyro_x_dps":0.5,"gyro_y_dps":0.2,"gyro_z_dps":1.0,"accel_magnitude_g":0.980},"event":{"type":"NONE","sos_active":false},"comms":{"connected":true},"battery_mv":null,"fault_flags":0}
+[COMMS][STUB] would send 556 bytes, topic/path: PENDING_CONFIRMATION, transport: PENDING_CONFIRMATION
+[TELEMETRY] {"packet_version":"0.1-DRAFT","device_id":"CRASH_ESP32_01","seq":20,"uptime_ms":78200,"data_source":"SIMULATED","device_state":"OPERATIONAL","timestamp_utc":"1994-03-23T12:35:19Z","location":{"fix":true,"latitude":48.117300,"longitude":11.516667,"altitude_m":545.4,"speed_kmh":41.5,"satellites":8,"hdop":0.90},"motion":{"accel_x_g":0.010,"accel_y_g":0.010,"accel_z_g":0.980,"gyro_x_dps":0.5,"gyro_y_dps":0.2,"gyro_z_dps":1.0,"accel_magnitude_g":0.980},"event":{"type":"NONE","sos_active":false},"comms":{"connected":true},"battery_mv":null,"fault_flags":0}
+[COMMS][STUB] would send 556 bytes, topic/path: PENDING_CONFIRMATION, transport: PENDING_CONFIRMATION
+[TELEMETRY] {"packet_version":"0.1-DRAFT","device_id":"CRASH_ESP32_01","seq":21,"uptime_ms":83200,"data_source":"SIMULATED","device_state":"OPERATIONAL","timestamp_utc":"1994-03-23T12:35:20Z","location":{"fix":true,"latitude":48.117417,"longitude":11.516867,"altitude_m":545.6,"speed_kmh":40.6,"satellites":8,"hdop":0.90},"motion":{"accel_x_g":0.010,"accel_y_g":0.010,"accel_z_g":0.980,"gyro_x_dps":0.5,"gyro_y_dps":0.2,"gyro_z_dps":1.0,"accel_magnitude_g":0.980},"event":{"type":"NONE","sos_active":false},"comms":{"connected":true},"battery_mv":null,"fault_flags":0}
+[COMMS][STUB] would send 556 bytes, topic/path: PENDING_CONFIRMATION, transport: PENDING_CONFIRMATION
+[SIM][TEST INPUT] t=84.0s scenario end
+[SIM] scenario complete. packets sent=20, not sent (network down)=1, checksum failures rejected=1
+[STATUS] t=85.0s state=OPERATIONAL gnss=OK fix=YES imu=OK comms=UP event=NONE sos=NO faults=0x00
+[TELEMETRY] {"packet_version":"0.1-DRAFT","device_id":"CRASH_ESP32_01","seq":22,"uptime_ms":88200,"data_source":"SIMULATED","device_state":"OPERATIONAL","timestamp_utc":"1994-03-23T12:35:19Z","location":{"fix":true,"latitude":48.117300,"longitude":11.516667,"altitude_m":545.4,"speed_kmh":41.5,"satellites":8,"hdop":0.90},"motion":{"accel_x_g":0.010,"accel_y_g":0.010,"accel_z_g":0.980,"gyro_x_dps":0.5,"gyro_y_dps":0.2,"gyro_z_dps":1.0,"accel_magnitude_g":0.980},"event":{"type":"NONE","sos_active":false},"comms":{"connected":true},"battery_mv":null,"fault_flags":0}
+[COMMS][STUB] would send 556 bytes, topic/path: PENDING_CONFIRMATION, transport: PENDING_CONFIRMATION

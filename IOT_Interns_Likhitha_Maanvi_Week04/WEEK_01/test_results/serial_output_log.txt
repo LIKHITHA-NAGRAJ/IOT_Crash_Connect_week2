@@ -1,0 +1,200 @@
+
+ESP32-S3 GPS + IMU MINI DEMO
+GPS: RECORDED NMEA DATA - NOT LIVE GPS
+IMU: SIMULATED / TEST DATA
+
+================================
+TASK 1: GPS NMEA PARSING
+RECORDED DATA - NOT LIVE GPS
+================================
+
+--- Record 1: Valid fix (recorded sample) ---
+Device ID  : CRASH_ESP32_01
+Latitude   : 48.117300
+Longitude  : 11.516667
+Timestamp  : 1994-03-23T12:35:19Z
+GPS Status : VALID (fix quality 1)
+Satellites : 8
+HDOP       : 0.90
+Altitude   : 545.4 m
+Payload    : {"device_id":"CRASH_ESP32_01","latitude":48.117300,"longitude":11.516667,"timestamp":"1994-03-23T12:35:19Z","gps_status":"VALID"}
+
+--- Record 2: Valid fix (second recorded sample) ---
+Device ID  : CRASH_ESP32_01
+Latitude   : 48.117417
+Longitude  : 11.516867
+Timestamp  : 1994-03-23T12:35:20Z
+GPS Status : VALID (fix quality 1)
+Satellites : 8
+HDOP       : 0.90
+Altitude   : 545.6 m
+Payload    : {"device_id":"CRASH_ESP32_01","latitude":48.117417,"longitude":11.516867,"timestamp":"1994-03-23T12:35:20Z","gps_status":"VALID"}
+
+--- Record 3: No fix (GGA fix quality 0, RMC status V) ---
+Device ID  : CRASH_ESP32_01
+Latitude   : INVALID
+Longitude  : INVALID
+Timestamp  : 1994-03-23T12:35:21Z
+GPS Status : NO FIX
+Satellites : 0
+HDOP       : 99.99
+Payload    : not prepared (no valid fix)
+
+--- Record 4: Corrupted sentence (wrong checksum) ---
+Result     : REJECTED (checksum mismatch)
+Checksum failures: 1
+
+GPS input is recorded test data.
+
+================================
+TASK 2: IMU DATA PROCESSING
+SIMULATED / TEST DATA
+Test case: STATIONARY
+================================
+
+Sample 1/5
+AX: 0.02 g
+AY: 0.01 g
+AZ: 0.98 g
+GX: 0.50 deg/s
+GY: 0.20 deg/s
+GZ: 1.00 deg/s
+Acceleration Magnitude: 0.980 g
+
+Sample 2/5
+AX: 0.01 g
+AY: 0.02 g
+AZ: 0.99 g
+GX: 0.40 deg/s
+GY: 0.30 deg/s
+GZ: 0.90 deg/s
+Acceleration Magnitude: 0.990 g
+
+Sample 3/5
+AX: 0.02 g
+AY: 0.00 g
+AZ: 1.00 g
+GX: 0.60 deg/s
+GY: 0.10 deg/s
+GZ: 1.10 deg/s
+Acceleration Magnitude: 1.000 g
+
+Sample 4/5
+AX: 0.01 g
+AY: 0.01 g
+AZ: 0.98 g
+GX: 0.50 deg/s
+GY: 0.20 deg/s
+GZ: 1.00 deg/s
+Acceleration Magnitude: 0.980 g
+
+Sample 5/5
+AX: 0.02 g
+AY: 0.02 g
+AZ: 0.99 g
+GX: 0.40 deg/s
+GY: 0.20 deg/s
+GZ: 0.80 deg/s
+Acceleration Magnitude: 0.990 g
+
+================================
+TASK 2: IMU DATA PROCESSING
+SIMULATED / TEST DATA
+Test case: TILT / ROTATION
+================================
+
+Sample 1/5
+AX: 0.35 g
+AY: 0.15 g
+AZ: 0.92 g
+GX: 12.00 deg/s
+GY: 5.00 deg/s
+GZ: 3.00 deg/s
+Acceleration Magnitude: 0.996 g
+
+Sample 2/5
+AX: 0.45 g
+AY: 0.20 g
+AZ: 0.88 g
+GX: 18.00 deg/s
+GY: 7.00 deg/s
+GZ: 4.00 deg/s
+Acceleration Magnitude: 1.008 g
+
+Sample 3/5
+AX: 0.55 g
+AY: 0.25 g
+AZ: 0.80 g
+GX: 25.00 deg/s
+GY: 9.00 deg/s
+GZ: 5.00 deg/s
+Acceleration Magnitude: 1.002 g
+
+Sample 4/5
+AX: 0.45 g
+AY: 0.20 g
+AZ: 0.88 g
+GX: 18.00 deg/s
+GY: 7.00 deg/s
+GZ: 4.00 deg/s
+Acceleration Magnitude: 1.008 g
+
+Sample 5/5
+AX: 0.35 g
+AY: 0.15 g
+AZ: 0.92 g
+GX: 12.00 deg/s
+GY: 5.00 deg/s
+GZ: 3.00 deg/s
+Acceleration Magnitude: 0.996 g
+
+================================
+TASK 2: IMU DATA PROCESSING
+SIMULATED / TEST DATA
+Test case: MOVEMENT
+================================
+
+Sample 1/5
+AX: 1.20 g
+AY: 0.40 g
+AZ: 0.80 g
+GX: 45.00 deg/s
+GY: 20.00 deg/s
+GZ: 10.00 deg/s
+Acceleration Magnitude: 1.497 g
+
+Sample 2/5
+AX: 1.80 g
+AY: -0.60 g
+AZ: 1.10 g
+GX: 90.00 deg/s
+GY: 55.00 deg/s
+GZ: 30.00 deg/s
+Acceleration Magnitude: 2.193 g
+
+Sample 3/5
+AX: -2.10 g
+AY: 1.40 g
+AZ: 0.40 g
+GX: 150.00 deg/s
+GY: 95.00 deg/s
+GZ: 60.00 deg/s
+Acceleration Magnitude: 2.555 g
+
+Sample 4/5
+AX: 2.40 g
+AY: -1.60 g
+AZ: 1.90 g
+GX: 210.00 deg/s
+GY: 140.00 deg/s
+GZ: 85.00 deg/s
+Acceleration Magnitude: 3.454 g
+
+Sample 5/5
+AX: 0.90 g
+AY: 0.30 g
+AZ: 1.00 g
+GX: 60.00 deg/s
+GY: 30.00 deg/s
+GZ: 15.00 deg/s
+Acceleration Magnitude: 1.378 g

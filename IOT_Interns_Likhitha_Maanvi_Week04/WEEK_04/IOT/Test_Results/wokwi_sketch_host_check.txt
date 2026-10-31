@@ -1,0 +1,11 @@
+/tmp/claude-0/-home-claude/060c343d-ddbe-5376-83f6-a61671552064/scratchpad/tinygps_src/src/TinyGPS++.cpp: In member function 'bool TinyGPSPlus::encode(char)':
+/tmp/claude-0/-home-claude/060c343d-ddbe-5376-83f6-a61671552064/scratchpad/tinygps_src/src/TinyGPS++.cpp:74:12: warning: this statement may fall through [-Wimplicit-fallthrough=]
+   74 |     parity ^= (uint8_t)c;
+      |     ~~~~~~~^~~~~~~~~~~~~
+/tmp/claude-0/-home-claude/060c343d-ddbe-5376-83f6-a61671552064/scratchpad/tinygps_src/src/TinyGPS++.cpp:75:3: note: here
+   75 |   case '\r':
+      |   ^~~~
+payloads checked: {'status': 3, 'telemetry': 31, 'event': 4}
+unique event ids: 4
+problems: 0
+202

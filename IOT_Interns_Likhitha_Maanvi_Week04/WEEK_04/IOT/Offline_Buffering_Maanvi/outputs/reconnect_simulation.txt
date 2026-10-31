@@ -1,0 +1,32 @@
+=== WEEK 4 RECONNECT TESTS ===
+LABEL: SIMULATION ONLY
+
+--- NO-NETWORK TEST ---
+Network state: DISCONNECTED
+Retry delays (seconds): [1, 2, 4, 8, 16, 30, 30]
+Expected: events remain queued; no send attempted without network.
+PASS: exponential backoff is capped at 30 seconds.
+
+--- NO-SERVER TEST ---
+Attempt 1: response=NO_SERVER, event_id=SIM-EVENT-001
+No ACK; event remains queued.
+Attempt 2: response=NO_SERVER, event_id=SIM-EVENT-001
+No ACK; event remains queued.
+Attempt 3: response=ACK, event_id=SIM-EVENT-001
+Simulated ACK received; event removed from queue.
+PASS: event ID stayed unchanged across retries.
+PASS: event remained queued until ACK.
+
+--- OFFLINE-THEN-ONLINE TEST ---
+Offline: queued events: ['SIM-001', 'SIM-002']
+Connectivity restored.
+SIMULATED SEND: SIM-001 captured_at=2026-10-29T10:00:00Z
+SIMULATED ACK: SIM-001
+SIMULATED SEND: SIM-002 captured_at=2026-10-29T10:00:05Z
+SIMULATED ACK: SIM-002
+PASS: FIFO order preserved.
+PASS: original timestamps preserved.
+PASS: queue emptied after simulated ACK.
+
+=== ALL RECONNECT SIMULATION TESTS COMPLETED ===
+No physical modem, network, or server was tested.

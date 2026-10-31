@@ -1,0 +1,14 @@
+scenario                 expected  decision   peak_g    trig result
+normal_driving           NONE      NONE       0.00      0    PASS
+hard_braking             NONE      NONE       0.00      0    PASS
+sharp_cornering          NONE      NONE       0.00      0    PASS
+pothole_spike            NONE      NONE       0.00      0    PASS
+speed_bump               NONE      NONE       0.00      0    PASS
+device_knock_gps_ok      REJECTED  REJECTED   6.08      1    PASS
+device_knock_no_gps      REJECTED  CONFIRMED  6.08      1    FAIL  <-- see Known issues
+frontal_impact           CONFIRMED CONFIRMED  8.12      1    PASS
+frontal_impact_no_gps    CONFIRMED CONFIRMED  8.12      1    PASS
+rollover                 CONFIRMED CONFIRMED  6.78      1    PASS
+sensor_dropout           NONE      NONE       0.00      0    PASS
+
+summary: 11 scenarios, 10 as expected, 1 not as expected

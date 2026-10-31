@@ -1,0 +1,6 @@
+[SIMULATED TRIGGER] event_id=84756b7c-9e78-44b3-8d13-1a4324316b8e
+[MOCK DASHBOARD RECEIVED] event_id=84756b7c-9e78-44b3-8d13-1a4324316b8e
+Injected mock delay: 50 ms
+Measured trigger-to-mock-dashboard latency: 50.24 ms
+PASS: Event ID preserved.
+LABEL: SIMULATION ONLY; NOT REAL LTE OR DASHBOARD LATENCY.

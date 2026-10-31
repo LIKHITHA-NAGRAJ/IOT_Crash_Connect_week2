@@ -1,0 +1,82 @@
+CRASH CONNECT Week 2 - host unit tests (stubbed Arduino, real TinyGPS++)
+
+== STATE MACHINE ==
+PASS  BOOT stays before boot time
+PASS  BOOT -> SELF_TEST after boot time
+PASS  SELF_TEST stays before self-test time
+PASS  SELF_TEST -> ACQUIRING_GPS on pass
+PASS  SELF_TEST -> FAULT on fail
+PASS  ACQUIRING_GPS waits without fix
+PASS  ACQUIRING_GPS -> NETWORK_CONNECTING on fix
+PASS  ACQUIRING_GPS -> DEGRADED on timeout
+PASS  NETWORK_CONNECTING waits without network
+PASS  NETWORK_CONNECTING -> OPERATIONAL
+PASS  NETWORK_CONNECTING -> DEGRADED on timeout
+PASS  NETWORK_CONNECTING -> DEGRADED if fix lost
+PASS  OPERATIONAL stays when all good
+PASS  OPERATIONAL -> EVENT_ACTIVE on impact
+PASS  OPERATIONAL -> EVENT_ACTIVE on SOS
+PASS  OPERATIONAL -> DEGRADED on GPS loss
+PASS  OPERATIONAL -> DEGRADED on network loss
+PASS  OPERATIONAL -> DEGRADED on non-critical fault
+PASS  EVENT_ACTIVE stays while event present
+PASS  EVENT_ACTIVE holds for minimum time
+PASS  EVENT_ACTIVE -> OPERATIONAL after hold
+PASS  EVENT_ACTIVE -> DEGRADED if system degraded
+PASS  DEGRADED stays while problem remains
+PASS  DEGRADED -> OPERATIONAL on recovery
+PASS  DEGRADED -> EVENT_ACTIVE on SOS
+PASS  FAULT stays while critical fault present
+PASS  FAULT waits restart delay
+PASS  FAULT -> BOOT after fault cleared
+PASS  critical fault -> FAULT from every other state
+
+== FAULT FLAGS ==
+PASS  no faults at start
+PASS  IMU fault is non-critical
+PASS  config fault is critical
+PASS  clear all
+
+== SAFETY / IMU ==
+PASS  below threshold -> no event
+PASS  at threshold -> impact suspected
+PASS  SOS has priority over impact
+PASS  invalid IMU sample never raises impact
+PASS  simulated IMU sample is flagged simulated
+PASS  stationary magnitude 0.980 g
+PASS  impact test magnitude matches formula
+PASS  impact test sample is above placeholder threshold
+
+== GNSS ==
+PASS  no data -> no fix
+PASS  valid GP GGA+RMC -> fix
+PASS  latitude/longitude decoded
+PASS  timestamp uses 80-99 -> 19xx year rule
+PASS  satellites decoded
+PASS  no-fix sentences -> fix invalid (old position not reused)
+PASS  satellite count 0 still reported as available
+PASS  wrong checksum counted and rejected
+PASS  rejected sentence did not change position
+PASS  stale data -> fix invalid
+PASS  GN talker (multi-constellation) accepted
+PASS  GN no-fix -> fix invalid
+
+== TELEMETRY ==
+PASS  packet with all values built
+PASS  latitude present
+PASS  battery present when available
+PACKET: {"packet_version":"0.1-DRAFT","device_id":"CRASH_ESP32_01","seq":1,"uptime_ms":12345,"data_source":"SIMULATED","device_state":"OPERATIONAL","timestamp_utc":"1994-03-23T12:35:19Z","location":{"fix":true,"latitude":48.117300,"longitude":11.516667,"altitude_m":545.4,"speed_kmh":41.5,"satellites":8,"hdop":0.90},"motion":{"accel_x_g":0.020,"accel_y_g":0.010,"accel_z_g":0.980,"gyro_x_dps":0.5,"gyro_y_dps":0.2,"gyro_z_dps":1.0,"accel_magnitude_g":0.980},"event":{"type":"NONE","sos_active":false},"comms":{"connected":true},"battery_mv":3900,"fault_flags":0}
+PASS  packet with unavailable values built
+PASS  no fix -> latitude/longitude null, not 0
+PASS  no fix -> timestamp null
+PASS  invalid IMU -> motion null, not 0
+PASS  battery unavailable -> null
+PASS  fix flag false
+PACKET: {"packet_version":"0.1-DRAFT","device_id":"CRASH_ESP32_01","seq":2,"uptime_ms":12345,"data_source":"SIMULATED","device_state":"DEGRADED","timestamp_utc":null,"location":{"fix":false,"latitude":null,"longitude":null,"altitude_m":null,"speed_kmh":null,"satellites":8,"hdop":null},"motion":{"accel_x_g":null,"accel_y_g":null,"accel_z_g":null,"gyro_x_dps":null,"gyro_y_dps":null,"gyro_z_dps":null,"accel_magnitude_g":null},"event":{"type":"NONE","sos_active":false},"comms":{"connected":false},"battery_mv":null,"fault_flags":0}
+PASS  missing GNSS/IMU pointers handled
+PACKET: {"packet_version":"0.1-DRAFT","device_id":"CRASH_ESP32_01","seq":2,"uptime_ms":12345,"data_source":"SIMULATED","device_state":"DEGRADED","timestamp_utc":null,"location":{"fix":false,"latitude":null,"longitude":null,"altitude_m":null,"speed_kmh":null,"satellites":null,"hdop":null},"motion":{"accel_x_g":null,"accel_y_g":null,"accel_z_g":null,"gyro_x_dps":null,"gyro_y_dps":null,"gyro_z_dps":null,"accel_magnitude_g":null},"event":{"type":"NONE","sos_active":false},"comms":{"connected":false},"battery_mv":null,"fault_flags":0}
+PASS  too-small buffer -> returns 0 (no partial packet)
+PASS  too-small buffer left empty
+PASS  sequence counter increments
+
+RESULT: 66 passed, 0 failed

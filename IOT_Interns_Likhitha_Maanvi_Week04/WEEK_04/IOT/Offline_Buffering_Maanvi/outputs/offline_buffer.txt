@@ -1,0 +1,30 @@
+=== OFFLINE BUFFERING SIMULATION ===
+
+--- Device offline ---
+BUFFERED: evt-001 captured_at=2026-10-27T10:00:00Z
+BUFFERED: evt-002 captured_at=2026-10-27T10:00:05Z
+BUFFERED: evt-003 captured_at=2026-10-27T10:00:10Z
+Buffered count: 3
+
+--- Buffer-full test ---
+BUFFER FULL: dropped incoming record evt-004
+Incoming record accepted: False
+Buffered count: 3
+Dropped newest count: 1
+
+--- Still offline ---
+OFFLINE: records remain buffered
+Buffered count: 3
+
+--- Reconnected ---
+SENT: evt-001 captured_at=2026-10-27T10:00:00Z
+SENT: evt-002 captured_at=2026-10-27T10:00:05Z
+SENT: evt-003 captured_at=2026-10-27T10:00:10Z
+
+--- Verification ---
+PASS: buffered records were sent in FIFO order
+PASS: original capture timestamps were preserved
+PASS: buffer emptied after simulated delivery
+PASS: newest incoming record was dropped when full
+PASS: all checks passed
+NOTE: Simulation only; no physical flash or network was used.

@@ -1,0 +1,202 @@
+CRASH CONNECT firmware v0.4 demo - ALL INPUTS SIMULATED (generated NMEA, synthetic IMU, mock modem, mock server)
+     1.600 [I][BOOT] CRASH CONNECT firmware 0.4.0 reset_reason=POWERON
+     1.600 [I][BOOT] config loaded=1 defaulted=16: id=DEVICE-001 provisioned=1 report moving=5s stationary=30s event=2s move_threshold=5.0km/h queues tel=50 evt=10 backoff=1s..30s ack_timeout=5000ms sos_hold=2000ms debounce=50ms wd=8s boot=1
+     1.600 [I][STATE] -> BOOT
+     2.608 [W][GNSS] E201 ERR_GNSS_NO_FIX: no fix, no coordinates will be reported
+     2.608 [I][STATE] BOOT -> SELF_TEST (boot complete)
+     2.608 [I][SELFTEST] PASS
+     3.616 [I][STATE] SELF_TEST -> ACQUIRING_GPS (self-test passed)
+    12.877 [I][STATUS] connected, queueing status message id=DEVICE-001-B1-S1
+    12.877 [I][STATUS] payload {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"status","sequence_number":1,"timestamp_utc":1793433611,"time_source":"SIMULATED","firmware_version":"0.4.0","uptime_s":12,"reset_reason":"POWERON","boot_count":1,"provisioned":true,"device_state":"ACQUIRING_GPS","data_source":"SIMULATED","network_registered":true,"signal_csq":18,"signal_dbm":-77,"power_source":null,"battery_mv":null}
+    12.877 [I][TX] send id=DEVICE-001-B1-S1 attempt=1
+    13.402 [I][TX] ACK http=200 id=DEVICE-001-B1-S1 (attempts=1)
+    15.712 [I][GNSS] fix acquired quality=1 satellites=8
+    15.712 [I][STATE] ACQUIRING_GPS -> NETWORK_CONNECTING (GPS fix acquired)
+    15.733 [I][STATE] NETWORK_CONNECTING -> OPERATIONAL (network connected)
+    15.733 [I][RATE] motion=STATIONARY event=0 interval=30s
+    31.609 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":2,"timestamp_utc":1793433630,"time_source":"SIMULATED","data_source":"SIMULATED","device_state":"OPERATIONAL","gnss_status":"FIX","gnss_fix_quality":1,"latitude":48.117300,"longitude":11.516667,"speed_kmh":0.0,"course_deg":84.4,"satellites":8,"hdop":0.90,"last_fix_age_s":0,"accel_x_g":0.025,"accel_y_g":0.001,"accel_z_g":0.993,"gyro_x_dps":1.8,"gyro_y_dps":-1.4,"gyro_z_dps":1.0,"accel_magnitude_g":0.993,"battery_mv":null,"fault_flags":0}
+    32.155 [I][TX] ACK http=200 id=T2 (attempts=1)
+---- t=50s TEST ACTION: stationary interval changed 30s -> 10s via stored config (ok=1)
+    51.601 [I][RATE] motion=STATIONARY event=0 interval=10s
+    51.601 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":3,"timestamp_utc":1793433650,"time_source":"SIMULATED","data_source":"SIMULATED","device_state":"OPERATIONAL","gnss_status":"FIX","gnss_fix_quality":1,"latitude":48.117300,"longitude":11.516667,"speed_kmh":0.0,"course_deg":84.4,"satellites":8,"hdop":0.90,"last_fix_age_s":0,"accel_x_g":0.023,"accel_y_g":0.007,"accel_z_g":0.990,"gyro_x_dps":-1.4,"gyro_y_dps":1.3,"gyro_z_dps":1.0,"accel_magnitude_g":0.991,"battery_mv":null,"fault_flags":0}
+    52.147 [I][TX] ACK http=200 id=T3 (attempts=1)
+    61.618 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":4,"timestamp_utc":1793433658,"time_source":"GNSS","data_source":"SIMULATED","device_state":"OPERATIONAL","gnss_status":"FIX","gnss_fix_quality":1,"latitude":48.117300,"longitude":11.516667,"speed_kmh":0.0,"course_deg":84.4,"satellites":8,"hdop":0.90,"last_fix_age_s":0,"accel_x_g":0.029,"accel_y_g":0.017,"accel_z_g":0.990,"gyro_x_dps":-1.7,"gyro_y_dps":1.2,"gyro_z_dps":1.0,"accel_magnitude_g":0.991,"battery_mv":null,"fault_flags":0}
+    62.164 [I][TX] ACK http=200 id=T4 (attempts=1)
+    71.635 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":5,"timestamp_utc":1793433668,"time_source":"GNSS","data_source":"SIMULATED","device_state":"OPERATIONAL","gnss_status":"FIX","gnss_fix_quality":1,"latitude":48.117300,"longitude":11.516667,"speed_kmh":0.0,"course_deg":84.4,"satellites":8,"hdop":0.90,"last_fix_age_s":0,"accel_x_g":-0.048,"accel_y_g":0.129,"accel_z_g":0.881,"gyro_x_dps":0.7,"gyro_y_dps":-0.4,"gyro_z_dps":1.0,"accel_magnitude_g":0.891,"battery_mv":null,"fault_flags":0}
+    72.160 [I][RATE] motion=MOVING event=0 interval=5s
+    72.181 [I][TX] ACK http=200 id=T5 (attempts=1)
+    76.654 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":6,"timestamp_utc":1793433673,"time_source":"GNSS","data_source":"SIMULATED","device_state":"OPERATIONAL","gnss_status":"FIX","gnss_fix_quality":1,"latitude":48.117300,"longitude":11.516667,"speed_kmh":45.0,"course_deg":84.4,"satellites":8,"hdop":0.90,"last_fix_age_s":0,"accel_x_g":0.137,"accel_y_g":-0.079,"accel_z_g":0.881,"gyro_x_dps":-1.7,"gyro_y_dps":1.2,"gyro_z_dps":1.0,"accel_magnitude_g":0.895,"battery_mv":null,"fault_flags":0}
+    77.200 [I][TX] ACK http=200 id=T6 (attempts=1)
+    81.673 [I][SOS] press detected, keep holding 2000ms
+    81.673 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":7,"timestamp_utc":1793433678,"time_source":"GNSS","data_source":"SIMULATED","device_state":"OPERATIONAL","gnss_status":"FIX","gnss_fix_quality":1,"latitude":48.117300,"longitude":11.516667,"speed_kmh":45.0,"course_deg":84.4,"satellites":8,"hdop":0.90,"last_fix_age_s":0,"accel_x_g":-0.086,"accel_y_g":0.041,"accel_z_g":0.882,"gyro_x_dps":2.0,"gyro_y_dps":-1.5,"gyro_z_dps":1.0,"accel_magnitude_g":0.887,"battery_mv":null,"fault_flags":0}
+    82.219 [I][TX] ACK http=200 id=T7 (attempts=1)
+    82.681 [I][SOS] released after 1008ms, cancelled (short press ignored)
+    86.671 [I][SOS] press detected, keep holding 2000ms
+    86.692 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":8,"timestamp_utc":1793433683,"time_source":"GNSS","data_source":"SIMULATED","device_state":"OPERATIONAL","gnss_status":"FIX","gnss_fix_quality":1,"latitude":48.117300,"longitude":11.516667,"speed_kmh":45.0,"course_deg":84.4,"satellites":8,"hdop":0.90,"last_fix_age_s":0,"accel_x_g":0.062,"accel_y_g":0.047,"accel_z_g":0.883,"gyro_x_dps":-1.4,"gyro_y_dps":1.3,"gyro_z_dps":1.0,"accel_magnitude_g":0.886,"battery_mv":null,"fault_flags":0}
+    87.238 [I][TX] ACK http=200 id=T8 (attempts=1)
+    88.624 [I][SOS] long press confirmed after 2016ms, SOS activated
+    88.624 [I][EVENT] sos id=DEVICE-001-B1-E1 location=CURRENT age=0s
+    88.624 [I][EVENT] payload {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"event","sequence_number":9,"timestamp_utc":1793433685,"time_source":"GNSS","event_id":"DEVICE-001-B1-E1","event_type":"sos","description":"SOS button pressed","latitude":48.117300,"longitude":11.516667,"gnss_fix_quality":1,"location_age_s":0,"location_source":"CURRENT","accident_type":null,"confirmation_state":"USER_TRIGGERED","peak_accel_g":null,"data_source":"SIMULATED","snapshot":null}
+    88.624 [I][TX] send id=DEVICE-001-B1-E1 attempt=1
+    88.624 [I][STATE] OPERATIONAL -> EVENT_ACTIVE (event detected)
+    88.624 [I][RATE] motion=MOVING event=1 interval=2s
+    88.708 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":10,"timestamp_utc":1793433685,"time_source":"GNSS","data_source":"SIMULATED","device_state":"EVENT_ACTIVE","gnss_status":"FIX","gnss_fix_quality":1,"latitude":48.117300,"longitude":11.516667,"speed_kmh":45.0,"course_deg":84.4,"satellites":8,"hdop":0.90,"last_fix_age_s":0,"accel_x_g":0.139,"accel_y_g":0.125,"accel_z_g":1.109,"gyro_x_dps":-1.1,"gyro_y_dps":-0.2,"gyro_z_dps":1.0,"accel_magnitude_g":1.125,"battery_mv":null,"fault_flags":0}
+    89.149 [I][TX] ACK http=200 id=DEVICE-001-B1-E1 (attempts=1)
+---- t=88s TEST ACTION: network registration removed (mock)
+    89.758 [I][TX] ACK http=200 id=T10 (attempts=1)
+    90.724 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":11,"timestamp_utc":1793433687,"time_source":"GNSS","data_source":"SIMULATED","device_state":"EVENT_ACTIVE","gnss_status":"FIX","gnss_fix_quality":1,"latitude":48.117300,"longitude":11.516667,"speed_kmh":45.0,"course_deg":84.4,"satellites":8,"hdop":0.90,"last_fix_age_s":0,"accel_x_g":0.091,"accel_y_g":-0.021,"accel_z_g":0.944,"gyro_x_dps":-0.7,"gyro_y_dps":-1.0,"gyro_z_dps":1.0,"accel_magnitude_g":0.949,"battery_mv":null,"fault_flags":0}
+    91.333 [I][TX] ACK http=200 id=T11 (attempts=1)
+    91.501 [W][MODEM] E402 ERR_MODEM_NOT_REGISTERED: network registration lost
+    92.740 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":12,"timestamp_utc":1793433689,"time_source":"GNSS","data_source":"SIMULATED","device_state":"EVENT_ACTIVE","gnss_status":"FIX","gnss_fix_quality":1,"latitude":48.117300,"longitude":11.516667,"speed_kmh":45.0,"course_deg":84.4,"satellites":8,"hdop":0.90,"last_fix_age_s":0,"accel_x_g":-0.031,"accel_y_g":-0.107,"accel_z_g":0.980,"gyro_x_dps":-0.2,"gyro_y_dps":1.5,"gyro_z_dps":1.0,"accel_magnitude_g":0.986,"battery_mv":null,"fault_flags":0}
+    92.761 [W][TX] E500 ERR_TX_NO_NETWORK: 0 event(s), 1 telemetry waiting
+    94.756 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":13,"timestamp_utc":1793433691,"time_source":"GNSS","data_source":"SIMULATED","device_state":"EVENT_ACTIVE","gnss_status":"FIX","gnss_fix_quality":1,"latitude":48.117300,"longitude":11.516667,"speed_kmh":45.0,"course_deg":84.4,"satellites":8,"hdop":0.90,"last_fix_age_s":0,"accel_x_g":-0.100,"accel_y_g":0.035,"accel_z_g":1.088,"gyro_x_dps":0.3,"gyro_y_dps":-0.9,"gyro_z_dps":1.0,"accel_magnitude_g":1.093,"battery_mv":null,"fault_flags":0}
+    96.625 [I][DETECT] candidate: sustained high g (peak 7.17 g)
+    96.772 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":14,"timestamp_utc":1793433693,"time_source":"GNSS","data_source":"SIMULATED","device_state":"EVENT_ACTIVE","gnss_status":"FIX","gnss_fix_quality":1,"latitude":48.117300,"longitude":11.516667,"speed_kmh":45.0,"course_deg":84.4,"satellites":8,"hdop":0.90,"last_fix_age_s":0,"accel_x_g":0.800,"accel_y_g":0.500,"accel_z_g":1.100,"gyro_x_dps":150.0,"gyro_y_dps":90.0,"gyro_z_dps":60.0,"accel_magnitude_g":1.449,"battery_mv":null,"fault_flags":0}
+    98.641 [I][STATE] EVENT_ACTIVE -> DEGRADED (event cleared, system degraded)
+    98.641 [I][RATE] motion=MOVING event=0 interval=5s
+    99.376 [I][DETECT] confirmed: IMPACT peak=7.17 g rotation=2 deg speed_check=YES after 2751ms
+    99.376 [I][EVENT] accident id=DEVICE-001-B1-E2 location=CURRENT age=0s
+    99.376 [I][EVENT] payload {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"event","sequence_number":15,"timestamp_utc":1793433696,"time_source":"GNSS","event_id":"DEVICE-001-B1-E2","event_type":"accident","description":"Possible vehicle accident detected","latitude":48.117300,"longitude":11.516667,"gnss_fix_quality":1,"location_age_s":0,"location_source":"CURRENT","accident_type":"IMPACT","confirmation_state":"CONFIRMED","peak_accel_g":7.17,"data_source":"SIMULATED","snapshot":null}
+    99.376 [I][STATE] DEGRADED -> EVENT_ACTIVE (event detected while degraded)
+    99.376 [I][RATE] motion=STATIONARY event=1 interval=2s
+    99.376 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":16,"timestamp_utc":1793433696,"time_source":"GNSS","data_source":"SIMULATED","device_state":"EVENT_ACTIVE","gnss_status":"FIX","gnss_fix_quality":1,"latitude":48.117300,"longitude":11.516667,"speed_kmh":0.0,"course_deg":84.4,"satellites":8,"hdop":0.90,"last_fix_age_s":0,"accel_x_g":0.030,"accel_y_g":0.019,"accel_z_g":0.991,"gyro_x_dps":-1.8,"gyro_y_dps":1.1,"gyro_z_dps":1.0,"accel_magnitude_g":0.991,"battery_mv":null,"fault_flags":0}
+   101.392 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":17,"timestamp_utc":1793433698,"time_source":"GNSS","data_source":"SIMULATED","device_state":"EVENT_ACTIVE","gnss_status":"FIX","gnss_fix_quality":1,"latitude":48.117300,"longitude":11.516667,"speed_kmh":0.0,"course_deg":84.4,"satellites":8,"hdop":0.90,"last_fix_age_s":0,"accel_x_g":0.022,"accel_y_g":0.014,"accel_z_g":1.005,"gyro_x_dps":-1.6,"gyro_y_dps":0.1,"gyro_z_dps":1.0,"accel_magnitude_g":1.006,"battery_mv":null,"fault_flags":0}
+---- t=100s TEST ACTION: network registration restored (mock)
+   101.728 [I][STATUS] connected, queueing status message id=DEVICE-001-B1-S2
+   101.728 [I][STATUS] payload {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"status","sequence_number":18,"timestamp_utc":1793433698,"time_source":"GNSS","firmware_version":"0.4.0","uptime_s":101,"reset_reason":"POWERON","boot_count":1,"provisioned":true,"device_state":"EVENT_ACTIVE","data_source":"SIMULATED","network_registered":true,"signal_csq":18,"signal_dbm":-77,"power_source":null,"battery_mv":null}
+   101.728 [I][TX] send id=DEVICE-001-B1-E2 attempt=1
+   102.253 [I][TX] ACK http=200 id=DEVICE-001-B1-E2 (attempts=1)
+   102.274 [I][TX] send id=DEVICE-001-B1-S2 attempt=1
+   102.862 [I][TX] ACK http=200 id=DEVICE-001-B1-S2 (attempts=1)
+   103.408 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":19,"timestamp_utc":1793433700,"time_source":"GNSS","data_source":"SIMULATED","device_state":"EVENT_ACTIVE","gnss_status":"FIX","gnss_fix_quality":1,"latitude":48.117300,"longitude":11.516667,"speed_kmh":0.0,"course_deg":84.4,"satellites":8,"hdop":0.90,"last_fix_age_s":0,"accel_x_g":0.012,"accel_y_g":0.001,"accel_z_g":1.001,"gyro_x_dps":-1.3,"gyro_y_dps":-1.2,"gyro_z_dps":1.0,"accel_magnitude_g":1.001,"battery_mv":null,"fault_flags":0}
+   103.471 [I][TX] ACK http=200 id=T12 (attempts=1)
+   104.080 [I][TX] ACK http=200 id=T13 (attempts=1)
+   104.689 [I][TX] ACK http=200 id=T14 (attempts=1)
+   105.298 [I][TX] ACK http=200 id=T16 (attempts=1)
+   105.424 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":20,"timestamp_utc":1793433702,"time_source":"GNSS","data_source":"SIMULATED","device_state":"EVENT_ACTIVE","gnss_status":"FIX","gnss_fix_quality":1,"latitude":48.117300,"longitude":11.516667,"speed_kmh":0.0,"course_deg":84.4,"satellites":8,"hdop":0.90,"last_fix_age_s":0,"accel_x_g":0.011,"accel_y_g":0.005,"accel_z_g":0.993,"gyro_x_dps":-0.9,"gyro_y_dps":1.4,"gyro_z_dps":1.0,"accel_magnitude_g":0.993,"battery_mv":null,"fault_flags":0}
+---- t=104s TEST ACTION: mock server DOWN
+   105.844 [I][TX] ACK http=200 id=T17 (attempts=1)
+   107.440 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":21,"timestamp_utc":1793433704,"time_source":"GNSS","data_source":"SIMULATED","device_state":"EVENT_ACTIVE","gnss_status":"FIX","gnss_fix_quality":1,"latitude":48.117300,"longitude":11.516667,"speed_kmh":0.0,"course_deg":84.4,"satellites":8,"hdop":0.90,"last_fix_age_s":0,"accel_x_g":0.019,"accel_y_g":0.019,"accel_z_g":1.010,"gyro_x_dps":-0.4,"gyro_y_dps":-0.6,"gyro_z_dps":1.0,"accel_magnitude_g":1.010,"battery_mv":null,"fault_flags":0}
+   107.671 [I][SOS] press detected, keep holding 2000ms
+   109.393 [I][STATE] EVENT_ACTIVE -> OPERATIONAL (event cleared)
+   109.393 [I][RATE] motion=STATIONARY event=0 interval=10s
+   109.624 [I][SOS] long press confirmed after 2016ms, SOS activated
+   109.624 [I][EVENT] sos id=DEVICE-001-B1-E3 location=CURRENT age=0s
+   109.624 [I][EVENT] payload {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"event","sequence_number":22,"timestamp_utc":1793433706,"time_source":"GNSS","event_id":"DEVICE-001-B1-E3","event_type":"sos","description":"SOS button pressed","latitude":48.117300,"longitude":11.516667,"gnss_fix_quality":1,"location_age_s":0,"location_source":"CURRENT","accident_type":null,"confirmation_state":"USER_TRIGGERED","peak_accel_g":null,"data_source":"SIMULATED","snapshot":null}
+   109.624 [I][STATE] OPERATIONAL -> EVENT_ACTIVE (event detected)
+   109.624 [I][RATE] motion=STATIONARY event=1 interval=2s
+   109.624 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":23,"timestamp_utc":1793433706,"time_source":"GNSS","data_source":"SIMULATED","device_state":"EVENT_ACTIVE","gnss_status":"FIX","gnss_fix_quality":1,"latitude":48.117300,"longitude":11.516667,"speed_kmh":0.0,"course_deg":84.4,"satellites":8,"hdop":0.90,"last_fix_age_s":0,"accel_x_g":0.020,"accel_y_g":0.004,"accel_z_g":0.998,"gyro_x_dps":-0.9,"gyro_y_dps":-1.1,"gyro_z_dps":1.0,"accel_magnitude_g":0.998,"battery_mv":null,"fault_flags":0}
+   111.640 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":24,"timestamp_utc":1793433708,"time_source":"GNSS","data_source":"SIMULATED","device_state":"EVENT_ACTIVE","gnss_status":"FIX","gnss_fix_quality":1,"latitude":48.117300,"longitude":11.516667,"speed_kmh":0.0,"course_deg":84.4,"satellites":8,"hdop":0.90,"last_fix_age_s":0,"accel_x_g":0.011,"accel_y_g":0.002,"accel_z_g":0.996,"gyro_x_dps":-0.5,"gyro_y_dps":1.5,"gyro_z_dps":1.0,"accel_magnitude_g":0.996,"battery_mv":null,"fault_flags":0}
+   113.656 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":25,"timestamp_utc":1793433710,"time_source":"GNSS","data_source":"SIMULATED","device_state":"EVENT_ACTIVE","gnss_status":"FIX","gnss_fix_quality":1,"latitude":48.117300,"longitude":11.516667,"speed_kmh":0.0,"course_deg":84.4,"satellites":8,"hdop":0.90,"last_fix_age_s":0,"accel_x_g":0.012,"accel_y_g":0.015,"accel_z_g":1.009,"gyro_x_dps":-0.0,"gyro_y_dps":-0.7,"gyro_z_dps":1.0,"accel_magnitude_g":1.009,"battery_mv":null,"fault_flags":0}
+   114.076 [W][TX] E501 ERR_TX_NO_SERVER: no server answer id=T19 attempt=1, retry in 1s
+   115.084 [I][TX] send id=DEVICE-001-B1-E3 attempt=1
+   115.672 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":26,"timestamp_utc":1793433712,"time_source":"GNSS","data_source":"SIMULATED","device_state":"EVENT_ACTIVE","gnss_status":"FIX","gnss_fix_quality":1,"latitude":48.117300,"longitude":11.516667,"speed_kmh":0.0,"course_deg":84.4,"satellites":8,"hdop":0.90,"last_fix_age_s":0,"accel_x_g":0.021,"accel_y_g":0.019,"accel_z_g":0.990,"gyro_x_dps":0.4,"gyro_y_dps":-0.6,"gyro_z_dps":1.0,"accel_magnitude_g":0.991,"battery_mv":null,"fault_flags":0}
+   117.688 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":27,"timestamp_utc":1793433714,"time_source":"GNSS","data_source":"SIMULATED","device_state":"EVENT_ACTIVE","gnss_status":"FIX","gnss_fix_quality":1,"latitude":48.117300,"longitude":11.516667,"speed_kmh":0.0,"course_deg":84.4,"satellites":8,"hdop":0.90,"last_fix_age_s":0,"accel_x_g":0.029,"accel_y_g":0.005,"accel_z_g":1.007,"gyro_x_dps":0.9,"gyro_y_dps":1.4,"gyro_z_dps":1.0,"accel_magnitude_g":1.007,"battery_mv":null,"fault_flags":0}
+   119.641 [I][STATE] EVENT_ACTIVE -> OPERATIONAL (event cleared)
+   119.641 [I][RATE] motion=STATIONARY event=0 interval=10s
+   123.295 [W][TX] E501 ERR_TX_NO_SERVER: no server answer id=DEVICE-001-B1-E3 attempt=1, retry in 2s
+---- t=122s TEST ACTION: mock server UP
+   125.311 [I][TX] send id=DEVICE-001-B1-E3 attempt=2
+   125.836 [I][TX] ACK http=200 id=DEVICE-001-B1-E3 (attempts=2)
+   126.445 [I][TX] ACK http=200 id=T19 (attempts=2)
+   126.991 [I][TX] ACK http=200 id=T20 (attempts=1)
+   127.537 [I][TX] ACK http=200 id=T21 (attempts=1)
+   127.600 [W][GNSS] E201 ERR_GNSS_NO_FIX: no fix, no coordinates will be reported
+   127.600 [I][STATE] OPERATIONAL -> DEGRADED (GPS fix lost)
+   127.705 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":28,"timestamp_utc":1793433724,"time_source":"GNSS","data_source":"SIMULATED","device_state":"DEGRADED","gnss_status":"NO_FIX","gnss_fix_quality":0,"latitude":null,"longitude":null,"speed_kmh":null,"course_deg":null,"satellites":3,"hdop":null,"last_fix_age_s":1,"accel_x_g":0.015,"accel_y_g":0.000,"accel_z_g":1.008,"gyro_x_dps":1.9,"gyro_y_dps":1.0,"gyro_z_dps":1.0,"accel_magnitude_g":1.008,"battery_mv":null,"fault_flags":0}
+   128.083 [I][TX] ACK http=200 id=T23 (attempts=1)
+   128.629 [I][TX] ACK http=200 id=T24 (attempts=1)
+   129.175 [I][TX] ACK http=200 id=T25 (attempts=1)
+   129.721 [I][TX] ACK http=200 id=T26 (attempts=1)
+   130.267 [I][TX] ACK http=200 id=T27 (attempts=1)
+   130.813 [I][TX] ACK http=200 id=T28 (attempts=1)
+   131.674 [I][SOS] press detected, keep holding 2000ms
+   133.627 [I][SOS] long press confirmed after 2016ms, SOS activated
+   133.627 [I][EVENT] sos id=DEVICE-001-B1-E4 location=LAST_KNOWN age=7s
+   133.627 [I][EVENT] payload {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"event","sequence_number":29,"timestamp_utc":1793433730,"time_source":"GNSS","event_id":"DEVICE-001-B1-E4","event_type":"sos","description":"SOS button pressed","latitude":48.117300,"longitude":11.516667,"gnss_fix_quality":0,"location_age_s":7,"location_source":"LAST_KNOWN","accident_type":null,"confirmation_state":"USER_TRIGGERED","peak_accel_g":null,"data_source":"SIMULATED","snapshot":null}
+   133.627 [I][TX] send id=DEVICE-001-B1-E4 attempt=1
+   133.627 [I][STATE] DEGRADED -> EVENT_ACTIVE (event detected while degraded)
+   133.627 [I][RATE] motion=STATIONARY event=1 interval=2s
+   133.627 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":30,"timestamp_utc":1793433730,"time_source":"GNSS","data_source":"SIMULATED","device_state":"EVENT_ACTIVE","gnss_status":"NO_FIX","gnss_fix_quality":0,"latitude":null,"longitude":null,"speed_kmh":null,"course_deg":null,"satellites":3,"hdop":null,"last_fix_age_s":7,"accel_x_g":0.029,"accel_y_g":0.018,"accel_z_g":1.004,"gyro_x_dps":0.5,"gyro_y_dps":1.5,"gyro_z_dps":1.0,"accel_magnitude_g":1.004,"battery_mv":null,"fault_flags":0}
+   134.152 [I][TX] ACK http=200 id=DEVICE-001-B1-E4 (attempts=1)
+   134.698 [I][TX] ACK http=200 id=T30 (attempts=1)
+   135.643 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":31,"timestamp_utc":1793433732,"time_source":"GNSS","data_source":"SIMULATED","device_state":"EVENT_ACTIVE","gnss_status":"NO_FIX","gnss_fix_quality":0,"latitude":null,"longitude":null,"speed_kmh":null,"course_deg":null,"satellites":3,"hdop":null,"last_fix_age_s":9,"accel_x_g":0.029,"accel_y_g":0.005,"accel_z_g":0.991,"gyro_x_dps":0.0,"gyro_y_dps":-0.7,"gyro_z_dps":1.0,"accel_magnitude_g":0.992,"battery_mv":null,"fault_flags":0}
+   136.189 [I][TX] ACK http=200 id=T31 (attempts=1)
+   137.659 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":32,"timestamp_utc":1793433734,"time_source":"GNSS","data_source":"SIMULATED","device_state":"EVENT_ACTIVE","gnss_status":"NO_FIX","gnss_fix_quality":0,"latitude":null,"longitude":null,"speed_kmh":null,"course_deg":null,"satellites":3,"hdop":null,"last_fix_age_s":11,"accel_x_g":0.019,"accel_y_g":0.001,"accel_z_g":1.010,"gyro_x_dps":-0.5,"gyro_y_dps":-0.5,"gyro_z_dps":1.0,"accel_magnitude_g":1.010,"battery_mv":null,"fault_flags":0}
+   138.268 [I][TX] ACK http=200 id=T32 (attempts=1)
+   139.675 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":33,"timestamp_utc":1793433736,"time_source":"GNSS","data_source":"SIMULATED","device_state":"EVENT_ACTIVE","gnss_status":"NO_FIX","gnss_fix_quality":0,"latitude":null,"longitude":null,"speed_kmh":null,"course_deg":null,"satellites":3,"hdop":null,"last_fix_age_s":13,"accel_x_g":0.011,"accel_y_g":0.015,"accel_z_g":0.993,"gyro_x_dps":-0.9,"gyro_y_dps":1.4,"gyro_z_dps":1.0,"accel_magnitude_g":0.993,"battery_mv":null,"fault_flags":0}
+   140.221 [I][TX] ACK http=200 id=T33 (attempts=1)
+   141.691 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":34,"timestamp_utc":1793433738,"time_source":"GNSS","data_source":"SIMULATED","device_state":"EVENT_ACTIVE","gnss_status":"NO_FIX","gnss_fix_quality":0,"latitude":null,"longitude":null,"speed_kmh":null,"course_deg":null,"satellites":3,"hdop":null,"last_fix_age_s":15,"accel_x_g":0.012,"accel_y_g":0.019,"accel_z_g":1.001,"gyro_x_dps":-1.3,"gyro_y_dps":-1.3,"gyro_z_dps":1.0,"accel_magnitude_g":1.001,"battery_mv":null,"fault_flags":0}
+   142.237 [I][TX] ACK http=200 id=T34 (attempts=1)
+   143.644 [I][STATE] EVENT_ACTIVE -> DEGRADED (event cleared, system degraded)
+   143.644 [I][RATE] motion=STATIONARY event=0 interval=10s
+   146.752 [I][GNSS] fix acquired quality=1 satellites=8
+   146.752 [I][STATE] DEGRADED -> OPERATIONAL (recovered)
+---- t=150s TEST ACTION: forced firmware hang (watchdog test)
+   159.583 [E][WATCHDOG] E701 ERR_WATCHDOG_RESET: no feed for more than 8s, simulated hardware reset
+---- simulated reset, rebooting firmware
+   159.583 [I][BOOT] CRASH CONNECT firmware 0.4.0 reset_reason=TASK_WDT
+   159.583 [I][BOOT] config loaded=3 defaulted=14: id=DEVICE-001 provisioned=1 report moving=5s stationary=10s event=2s move_threshold=5.0km/h queues tel=50 evt=10 backoff=1s..30s ack_timeout=5000ms sos_hold=2000ms debounce=50ms wd=8s boot=2
+   159.583 [I][STATE] -> BOOT
+   159.856 [I][GNSS] fix acquired quality=1 satellites=8
+   160.591 [I][STATE] BOOT -> SELF_TEST (boot complete)
+   160.591 [I][SELFTEST] PASS
+   161.599 [I][STATE] SELF_TEST -> ACQUIRING_GPS (self-test passed)
+   161.620 [I][STATE] ACQUIRING_GPS -> NETWORK_CONNECTING (GPS fix acquired)
+   170.860 [I][STATUS] connected, queueing status message id=DEVICE-001-B2-S1
+   170.860 [I][STATUS] payload {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"status","sequence_number":1,"timestamp_utc":1793433611,"time_source":"SIMULATED","firmware_version":"0.4.0","uptime_s":170,"reset_reason":"TASK_WDT","boot_count":2,"provisioned":true,"device_state":"NETWORK_CONNECTING","data_source":"SIMULATED","network_registered":true,"signal_csq":18,"signal_dbm":-77,"power_source":null,"battery_mv":null}
+   170.860 [I][TX] send id=DEVICE-001-B2-S1 attempt=1
+   170.860 [I][STATE] NETWORK_CONNECTING -> OPERATIONAL (network connected)
+   170.860 [I][RATE] motion=STATIONARY event=0 interval=10s
+   170.860 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":2,"timestamp_utc":1793433611,"time_source":"SIMULATED","data_source":"SIMULATED","device_state":"OPERATIONAL","gnss_status":"FIX","gnss_fix_quality":1,"latitude":48.117300,"longitude":11.516667,"speed_kmh":0.0,"course_deg":84.4,"satellites":8,"hdop":0.90,"last_fix_age_s":0,"accel_x_g":0.030,"accel_y_g":0.001,"accel_z_g":0.991,"gyro_x_dps":-1.8,"gyro_y_dps":1.1,"gyro_z_dps":1.0,"accel_magnitude_g":0.991,"battery_mv":null,"fault_flags":0}
+   171.385 [I][TX] ACK http=200 id=DEVICE-001-B2-S1 (attempts=1)
+   171.994 [I][TX] ACK http=200 id=T2 (attempts=1)
+   180.877 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":3,"timestamp_utc":1793433778,"time_source":"GNSS","data_source":"SIMULATED","device_state":"OPERATIONAL","gnss_status":"FIX","gnss_fix_quality":1,"latitude":48.117300,"longitude":11.516667,"speed_kmh":0.0,"course_deg":84.4,"satellites":8,"hdop":0.90,"last_fix_age_s":0,"accel_x_g":0.016,"accel_y_g":0.009,"accel_z_g":0.991,"gyro_x_dps":-1.2,"gyro_y_dps":1.4,"gyro_z_dps":1.0,"accel_magnitude_g":0.992,"battery_mv":null,"fault_flags":0}
+   181.423 [I][TX] ACK http=200 id=T3 (attempts=1)
+   190.894 [I][TELEMETRY] {"device_id":"DEVICE-001","schema_version":"1.0","message_type":"telemetry","sequence_number":4,"timestamp_utc":1793433788,"time_source":"GNSS","data_source":"SIMULATED","device_state":"OPERATIONAL","gnss_status":"FIX","gnss_fix_quality":1,"latitude":48.117300,"longitude":11.516667,"speed_kmh":0.0,"course_deg":84.4,"satellites":8,"hdop":0.90,"last_fix_age_s":0,"accel_x_g":0.012,"accel_y_g":0.018,"accel_z_g":0.992,"gyro_x_dps":1.4,"gyro_y_dps":-0.0,"gyro_z_dps":1.0,"accel_magnitude_g":0.993,"battery_mv":null,"fault_flags":0}
+   191.440 [I][TX] ACK http=200 id=T4 (attempts=1)
+
+==== DEMO SUMMARY (SIMULATED) ====
+telemetry built=31 status built=3 accident events=1 sos events=3
+after last boot: enqueued=4 attempts=4 acked=4 retries=0 rejected=0 dropped_newest=0 dropped_oldest=0
+mock server received 38 posts, watchdog resets=1
+mock server log (order of arrival):
+  #01 http=200 id=seq:1
+  #02 http=200 id=seq:2
+  #03 http=200 id=seq:3
+  #04 http=200 id=seq:4
+  #05 http=200 id=seq:5
+  #06 http=200 id=seq:6
+  #07 http=200 id=seq:7
+  #08 http=200 id=seq:8
+  #09 http=200 id=DEVICE-001-B1-E1
+  #10 http=200 id=seq:10
+  #11 http=200 id=seq:11
+  #12 http=200 id=DEVICE-001-B1-E2
+  #13 http=200 id=seq:18
+  #14 http=200 id=seq:12
+  #15 http=200 id=seq:13
+  #16 http=200 id=seq:14
+  #17 http=200 id=seq:16
+  #18 http=200 id=seq:17
+  #19 http=200 id=DEVICE-001-B1-E3
+  #20 http=200 id=seq:19
+  #21 http=200 id=seq:20
+  #22 http=200 id=seq:21
+  #23 http=200 id=seq:23
+  #24 http=200 id=seq:24
+  #25 http=200 id=seq:25
+  #26 http=200 id=seq:26
+  #27 http=200 id=seq:27
+  #28 http=200 id=seq:28
+  #29 http=200 id=DEVICE-001-B1-E4
+  #30 http=200 id=seq:30
+  #31 http=200 id=seq:31
+  #32 http=200 id=seq:32
+  #33 http=200 id=seq:33
+  #34 http=200 id=seq:34
+  #35 http=200 id=seq:1
+  #36 http=200 id=seq:2
+  #37 http=200 id=seq:3
+  #38 http=200 id=seq:4
+log counts: errors=1 warnings=6

@@ -1,0 +1,12 @@
+scenario,expected_decision,expected_type,description
+normal_driving,NONE,,"Steady driving at 50 km/h, small noise"
+hard_braking,NONE,,"0.5 g braking for 2 s, 60 to 20 km/h"
+sharp_cornering,NONE,,"0.6 g lateral for 3 s, 25 dps yaw"
+pothole_spike,NONE,,"Single 4.5 g sample at 8 s, driving continues"
+speed_bump,NONE,,2.5 g for 60 ms at 20 km/h
+device_knock_gps_ok,REJECTED,,"6 g for 60 ms, vehicle keeps moving at 40 km/h, GPS available"
+device_knock_no_gps,REJECTED,,"Same knock without GPS: known false-positive risk, expected to fail"
+frontal_impact,CONFIRMED,IMPACT,"8 g for 80 ms at 50 km/h, tumble, stillness, GPS speed to 0"
+frontal_impact_no_gps,CONFIRMED,IMPACT,Same impact with no GPS fix: confirmed from IMU only
+rollover,CONFIRMED,ROLLOVER_SUSPECTED,"6 g, rotation of 90 degrees, stillness on its side"
+sensor_dropout,NONE,,"1 s of invalid IMU rows, no event"

@@ -1,0 +1,180 @@
+CRASH CONNECT v0.4 unit tests - HOST PC, SIMULATED/MOCK inputs, not run on ESP32-S3
+
+== Error table and logging ==
+PASS  error codes are unique
+PASS  error name lookup
+PASS  severity lookup
+PASS  levels are counted even when filtered
+PASS  last error remembered
+
+== Configuration storage (HOST SIMULATION of NVS) ==
+     0.000 [W][CONFIG] E101 ERR_CONFIG_DEFAULTED: device_id missing, device is UNPROVISIONED
+PASS  missing device_id reported as UNPROVISIONED
+PASS  nothing loaded from empty storage
+PASS  default intervals 5/30/2 s
+PASS  provision device id
+PASS  set stationary interval
+PASS  reject interval 0
+PASS  reject moving interval larger than stationary
+PASS  reject unknown key
+PASS  device_id survives reload
+PASS  interval survives reload
+     0.000 [W][CONFIG] E101 ERR_CONFIG_DEFAULTED: q_tel_cap=9999 out of range, default 50 used
+PASS  out-of-range stored value falls back to default
+     0.000 [W][CONFIG] E101 ERR_CONFIG_DEFAULTED: q_tel_cap=9999 out of range, default 50 used
+PASS  boot count persisted
+
+== Device clock ==
+PASS  no time source before any time is set
+PASS  epoch of 1970-01-01
+PASS  epoch of 2026-10-31 08:00:00
+PASS  recorded 1994 GNSS date refused as live time
+PASS  clock advances from uptime
+
+== GNSS handling (RECORDED NMEA samples from Week 1/2 sensor_data) ==
+PASS  no data before any sentence
+PASS  valid fix from GP sentences
+PASS  coordinates decoded
+PASS  speed decoded from knots to km/h
+PASS  recorded 1994 date is not used as UTC
+PASS  NO_FIX after no-fix sentence
+PASS  last valid fix is remembered
+PASS  last valid fix age is 2 s
+PASS  STALE when receiver stops sending
+PASS  wrong checksum rejected
+PASS  GN talker accepted
+PASS  generated 2026 date gives UTC epoch
+
+== IMU, ring buffer, filter, CSV ==
+PASS  ring buffer is bounded and overwrites oldest
+PASS  ring buffer keeps order oldest to newest
+PASS  constant signal has zero motion deviation
+PASS  low-pass filter step
+PASS  CSV row parsed
+PASS  CSV header skipped
+PASS  CSV row with nan rejected
+PASS  no GPS fix gives no speed
+PASS  CSV format and parse round trip
+
+== Accident detector stages (SIMULATED samples) ==
+PASS  single spike alone does not trigger
+PASS  one-sample spike (pothole) ignored
+PASS  two samples above trigger give a candidate
+PASS  stillness plus stopped GPS confirms IMPACT
+PASS  confirmed counter
+PASS  invalid sample counted and ignored
+
+== SOS long press and debounce (SIMULATED button) ==
+PASS  contact bounce shorter than debounce is ignored
+PASS  1 s press is cancelled
+PASS  long press triggers once after the hold time
+
+== Message queue (RAM model of the flash-backed queue) ==
+PASS  drop-newest policy rejects the 4th record
+PASS  FIFO head is the oldest record
+PASS  FIFO order after pop
+PASS  drop-oldest policy evicts the oldest
+
+== Modem state machine with MOCK AT responses ==
+    40.000 [W][CONFIG] E101 ERR_CONFIG_DEFAULTED: q_tel_cap=9999 out of range, default 50 used
+PASS  bring-up reaches READY (mock)
+PASS  signal quality parsed from AT+CSQ (mock)
+    20.300 [W][MODEM] E402 ERR_MODEM_NOT_REGISTERED: network registration lost
+PASS  registration loss detected
+PASS  recovers when registration returns
+    11.120 [W][MODEM] E401 ERR_MODEM_SIM_NOT_READY: SIM not ready, power-cycle retry in 1s (failure 1)
+PASS  SIM not ready is reported
+    16.100 [W][MODEM] E400 ERR_MODEM_NO_RESPONSE: no answer to AT, power-cycle retry in 1s (failure 1)
+PASS  no AT answer is reported
+    41.480 [W][MODEM] E402 ERR_MODEM_NOT_REGISTERED: network registration timeout, power-cycle retry in 1s (failure 1)
+PASS  registration timeout is reported
+PASS  post accepted when READY
+PASS  HTTP 200 from mock server is an ACK
+
+== Retry, acknowledgement and offline queue (MOCK modem and server) ==
+    24.000 [W][CONFIG] E101 ERR_CONFIG_DEFAULTED: q_tel_cap=9999 out of range, default 50 used
+    20.020 [W][TX] E500 ERR_TX_NO_NETWORK: 2 event(s), 0 telemetry waiting
+PASS  offline: events stay queued, nothing sent
+    31.440 [I][TX] send id=A-1 attempt=1
+    31.940 [I][TX] ACK http=200 id=A-1 (attempts=1)
+    31.960 [I][TX] send id=A-2 attempt=1
+    32.520 [I][TX] ACK http=200 id=A-2 (attempts=1)
+PASS  online: queue emptied after ACKs
+PASS  delivered in FIFO order
+    20.020 [I][TX] send id=B-1 attempt=1
+    28.220 [W][TX] E501 ERR_TX_NO_SERVER: no server answer id=B-1 attempt=1, retry in 1s
+    29.220 [I][TX] send id=B-1 attempt=2
+    37.420 [W][TX] E501 ERR_TX_NO_SERVER: no server answer id=B-1 attempt=2, retry in 2s
+    39.420 [I][TX] send id=B-1 attempt=3
+    47.620 [W][TX] E501 ERR_TX_NO_SERVER: no server answer id=B-1 attempt=3, retry in 4s
+    51.620 [I][TX] send id=B-1 attempt=4
+    59.820 [W][TX] E501 ERR_TX_NO_SERVER: no server answer id=B-1 attempt=4, retry in 8s
+PASS  no server: event retained and retried
+    67.820 [I][TX] send id=B-1 attempt=5
+    68.320 [I][TX] ACK http=200 id=B-1 (attempts=5)
+PASS  delivered after server returns
+PASS  same event id on every attempt
+PASS  queue empty at end
+    20.020 [I][TX] send id=C-1 attempt=1
+    20.520 [E][TX] E502 ERR_TX_REJECTED: http=400 id=C-1 dropped
+PASS  HTTP 400 drops the record with an error code
+    20.020 [I][TX] send id=D-1 attempt=1
+    20.520 [W][TX] E501 ERR_TX_NO_SERVER: server error id=D-1 attempt=1, retry in 1s
+    21.520 [I][TX] send id=D-1 attempt=2
+    22.020 [W][TX] E501 ERR_TX_NO_SERVER: server error id=D-1 attempt=2, retry in 2s
+    24.020 [I][TX] send id=D-1 attempt=3
+    24.520 [W][TX] E501 ERR_TX_NO_SERVER: server error id=D-1 attempt=3, retry in 4s
+    28.520 [I][TX] send id=D-1 attempt=4
+    29.020 [W][TX] E501 ERR_TX_NO_SERVER: server error id=D-1 attempt=4, retry in 8s
+    37.020 [I][TX] send id=D-1 attempt=5
+    37.520 [W][TX] E501 ERR_TX_NO_SERVER: server error id=D-1 attempt=5, retry in 16s
+PASS  HTTP 503 is retried
+    53.520 [I][TX] send id=D-1 attempt=6
+    54.020 [W][TX] E501 ERR_TX_NO_SERVER: server error id=D-1 attempt=6, retry in 30s
+    84.020 [I][TX] send id=D-1 attempt=7
+    84.520 [W][TX] E501 ERR_TX_NO_SERVER: server error id=D-1 attempt=7, retry in 30s
+PASS  backoff grows and stays at or below 30 s
+    20.020 [I][TX] send id=E-1 attempt=1
+    20.520 [I][TX] ACK http=200 id=E-1 (attempts=1)
+    21.040 [I][TX] ACK http=200 id=T-1 (attempts=1)
+PASS  events lane is sent before telemetry lane
+
+== Flat message builders ==
+    30.000 [W][CONFIG] E101 ERR_CONFIG_DEFAULTED: q_tel_cap=9999 out of range, default 50 used
+PASS  no fix: null coordinates, fix quality 0
+PASS  no time source: null timestamp
+PASS  unavailable values are null
+PASS  telemetry is flat (no nested object)
+PASS  status: unavailable signal and power are null
+PASS  status: firmware version, reset reason, uptime
+PASS  SOS with no GPS ever: no coordinates
+PASS  SOS event id and state
+PASS  event ids are unique
+PASS  accident with last known location shows its age
+PASS  accident type and confirmation state
+
+== Adaptive reporting rate ==
+    30.000 [W][CONFIG] E101 ERR_CONFIG_DEFAULTED: q_tel_cap=9999 out of range, default 50 used
+PASS  moving: 5 s
+PASS  stationary: 30 s
+PASS  hysteresis keeps stationary between 2 and 5 km/h
+PASS  event active: 2 s
+PASS  changing stored interval changes behaviour
+PASS  no GPS: IMU vibration used to decide moving
+
+== State machine ==
+    30.000 [W][CONFIG] E101 ERR_CONFIG_DEFAULTED: q_tel_cap=9999 out of range, default 50 used
+PASS  SOS accepted while acquiring GPS
+PASS  SOS accepted while connecting
+PASS  SOS accepted while degraded
+PASS  event ignored during BOOT
+PASS  critical fault from every state goes to FAULT
+PASS  recovery to OPERATIONAL
+PASS  GPS loss degrades
+
+== Watchdog (SIMULATED forced hang) ==
+PASS  fed watchdog does not expire
+PASS  unfed watchdog expires after the timeout
+PASS  reset reason reported after watchdog reset
+
+TOTAL: 103 passed, 0 failed
